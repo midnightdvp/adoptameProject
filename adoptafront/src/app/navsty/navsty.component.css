@@ -1,0 +1,100 @@
+.container-fluid,
+.row {
+    height: 100%;
+}
+
+.col-1 {
+    padding-left: 0% !important;
+    padding-right: 0% !important;
+}
+
+.navsty {
+    width: 120px;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background-color: #1a2533 !important;
+    border-top-right-radius: 20px !important;
+    border-bottom-right-radius: 20px !important;
+    position: fixed;
+    z-index: 1000;
+}
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding-left: 0% !important;
+    /* padding-right: 0% !important; */
+    padding-right: 8px !important;
+}
+
+.sizeIMG {
+    width: 100%;
+    max-width: 40px;
+    height: auto;
+}
+
+.navName {
+    margin-top: 5px;
+}
+.nav-pills {
+    margin-right: 0% !important;
+}
+
+.navsty-horizontal {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 70px !important;
+    background-color: #1a2533 !important;
+    color: #ffffff !important;
+    z-index: 1000 !important;
+    padding: 10px !important;
+    border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important;
+    align-items: center !important;
+}
+
+.centy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.navsty-horizontal .nav-link {
+    color: white;
+    text-align: center !important;
+}
+
+.navsty-horizontal .nav-link .sizeIMG {
+    width: 30px;
+    height: 30px;
+
+}
+
+.navsty-horizontal .nav-link .navName {
+    font-size: 12px !important;
+    margin-bottom: 0% !important;
+}
+
+button:active, button:focus, button:visited{
+    background-color: #1a2533 !important;
+}
+
+@media screen and (max-width: 1028px) {
+    .navsty {
+        width: 100%;
+        height: auto;
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1028px) {
+    .navsty-horizontal {
+        display: none;
+    }
+}

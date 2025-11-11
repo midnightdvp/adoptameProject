@@ -1,0 +1,120 @@
+.map-container {
+    display: grid !important;
+    place-items: center !important;
+    height: 100vh !important;
+    width: 100% !important;
+    padding: 0% !important;
+}
+
+#map {
+    height: 100% !important;
+    width: 100% !important;
+}
+
+.popAlert {
+    width: 400px !important;
+    position: fixed;
+    top: 10px !important;
+    left: 50%;
+    background-color: #1a2533 !important;
+    color: white !important;
+    transform: translateX(-50%);
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cardUsers {
+    width: 400px !important;
+    position: fixed;
+    bottom: 70px !important;
+    left: 50%;
+    background-color: #1a2533 !important;
+    color: white !important;
+    transform: translateX(-50%);
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.imgLogo {
+    width: 100px !important;
+    height: 100px !important;
+}
+
+.btn-alerta {
+    font-size: 20px !important;
+    bottom: 90px !important;
+    right: 40px !important;
+    position: absolute !important;
+    /* Opción para mantener el botón encima del mapa */
+    z-index: 1000 !important;
+    /* Asegúrate de que esté por encima del mapa */
+    height: 50px !important;
+    width: 100px !important;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+.screenPer{
+    margin-top: 25% !important;
+    margin-left: 50% !important;
+}
+.screenPer2{
+    margin-top: 25% !important;
+    margin-left: 20% !important;
+}
+.event-item {
+    margin-bottom: 10px;
+}
+
+/* .event-details {
+    align-items: center;
+} */
+
+.dataEvent {
+    width: 120px !important;
+}
+
+/* .event-details span {
+    flex-grow: 1;
+}
+
+.event-details button {
+    margin-left: 10px;
+} */
+
+/* Estilo para los enlaces al pasar el mouse */
+a:hover {
+    color: inherit;
+}
+
+/* Ponele bueno */
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.newy {
+    height: 100px !important;
+}
+
+.blinking-icon {
+    animation: blink 8s infinite;
+}
+
+@media screen and (Min-width: 1028px) {
+    .btn-alerta {
+        display: none !important;
+    }
+
+}

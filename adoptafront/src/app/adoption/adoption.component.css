@@ -1,0 +1,473 @@
+* {
+  color: white !important;
+}
+
+.container {
+  padding: 100px
+}
+
+.isBtn {
+  width: 25px !important;
+  height: 25px !important;
+}
+
+.backBtn {
+  padding-left: 12px !important;
+  width: 50px !important;
+}
+
+.isBtn:hover {
+  cursor: pointer;
+}
+
+p {
+  padding: 0% !important;
+}
+
+.modal-Kl {
+  background-color: #1a2533 !important;
+}
+
+.card {
+  width: 500px !important;
+  height: 100% !important;
+  background-color: #1a2533 !important;
+  border-radius: 15px !important;
+  width: 300px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgb(0, 0, 0);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.card-text2 {
+  overflow: hidden;
+  white-space: pre-wrap;
+  /* Permite saltos de línea */
+  text-align: center;
+  display: inline-block;
+  position: relative;
+  height: 100px !important;
+  /* Altura inicial para mostrar una línea */
+  line-height: 1em;
+  /* Espaciado entre líneas */
+}
+
+.animate {
+  animation: typing 1s steps(100, end) 0s forwards;
+}
+
+.animate::after {
+  display: block;
+  /* Muestra el cursor solo durante la animación */
+  animation: hide-caret 1.8s step-end forwards;
+}
+
+
+
+@keyframes hide-caret {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+/* Animación de escritura */
+@keyframes typing {
+  from {
+    width: 0
+  }
+
+  to {
+    width: 100%;
+  }
+
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.blink {
+  animation: blink 0.5s infinite;
+}
+
+.card-header {
+  border-radius: 15px !important;
+}
+
+
+
+/* .top-row {
+  margin-top: 90px !important;
+} */
+
+/* .mgn {
+  margin-bottom: 100px !important;
+} */
+
+.btn-cont {
+  margin-top: 150px !important;
+}
+
+.btnColors {
+  margin-top: 0px !important;
+}
+
+.mgn-bot {
+  margin-bottom: 220px !important;
+}
+
+.mgn-bot-notFound {
+  margin-bottom: 70px !important;
+}
+
+.removeClasses {
+  all: unset;
+  /* Elimina todas las clases existentes */
+}
+
+.botSticky {
+  margin-top: 110px !important;
+  margin-bottom: 30px !important;
+  padding-inline: 20px !important;
+}
+
+.email-container {
+  cursor: default;
+}
+
+.email-container {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px;
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
+}
+
+.copy-icon {
+  margin-left: 10px;
+  padding: 5px;
+  cursor: pointer;
+  border: 1px solid #000;
+  border-radius: 4px;
+}
+
+.copy-icon:hover {
+  background-color: #f0f0f0 !important;
+  color: #000 !important;
+}
+
+.fa-clone {
+  border: 2px;
+  border-color: #fff;
+}
+
+.fa-clone:hover {
+  cursor: pointer;
+}
+
+.card-body {
+  height: 240px !important;
+}
+
+.btn-outline-light:hover {
+  color: black !important;
+}
+
+.close {
+  color: #fff;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-nor:hover {
+  color: white !important;
+  background-color: #dc3545 !important;
+}
+
+.img-fluid {
+  height: 98px !important;
+}
+
+.btn {
+  width: 100% !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.img-fluid {
+  height: 98px !important;
+  border-radius: 15px 15px 15px 15px;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 15px 15px 15px 15px;
+}
+
+.modal.show {
+  display: block;
+}
+
+.modal-dialog {
+  max-width: 30%;
+  margin-right: 35%;
+}
+
+.card-animal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.card-animal-color {
+  background-color: #1a2533 !important;
+  color: #fff;
+}
+
+.card-animal-color .card-title,
+.card-animal-color .card-text,
+.card-animal-color strong {
+  color: #fff;
+}
+
+.btn-primary {
+  background-color: #1a2533;
+  border-color: #bbbbbb;
+}
+
+.btn-danger {
+  background-color: #1a2533;
+  border-color: #bbbbbb;
+}
+
+/* Botones */
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+.card-animal-body .btn {
+  margin-bottom: 10px;
+}
+
+.card-animal-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+/* Bordes redondeados para la imagen superior de la tarjeta */
+.card-animal-img-top {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 100%;
+  height: auto;
+  max-height: 250px;
+  object-fit: cover;
+  object-position: top;
+}
+
+.shadow {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.23);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: inline-block;
+  border-radius: 10px;
+}
+
+.shadow:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3), 0 10px 10px rgba(0, 0, 0, 0.22);
+  border-radius: 10px;
+}
+
+h1.shadow {
+  display: inline-block;
+}
+
+.animals-background {
+  background-image: url('../../assets/images/home/background-cat.svg');
+  background-position: center center;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.tittle {
+  font-size: 4rem;
+  padding: 15px;
+  font-weight: 700;
+}
+
+.content {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* Pantalla mobile */
+@media screen and (max-width: 1028px) {
+
+  .shadow-lg::touch-action {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.23) !important;
+    transition: transform 0.3s, box-shadow 0.3s !important;
+  }
+
+  .card-text {
+    margin-bottom: 0px !important;
+  }
+
+  .btn-cont {
+    margin-top: 100px !important;
+  }
+
+  .btnColors {
+    margin-top: 0px !important;
+  }
+
+  .card {
+    width: 375px !important;
+    height: 610px !important;
+    background-color: #1a2533 !important;
+    border-radius: 15px !important;
+  }
+
+  .card-animals {
+    width: 385px !important;
+    height: 100% !important;
+    background-color: #1a2533 !important;
+    border-radius: 15px !important;
+    width: 300px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgb(0, 0, 0);
+    transition: box-shadow 0.3s ease-in-out;
+    padding: 20px !important;
+  }
+
+  .card-img-top {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px 15px 15px 15px;
+  }
+
+  .img-fluid {
+    height: 98px !important;
+    border-radius: 15px 15px 15px 15px;
+  }
+
+  .modal-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    max-width: none;
+  }
+
+  .modal-content {
+    width: 100%;
+    max-width: 600px;
+    /* Ajusta este valor según tus necesidades */
+    height: auto;
+    margin: auto;
+    border-radius: 0;
+  }
+
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .modal-body p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0;
+  }
+
+  .modal-header,
+  .modal-footer {
+    display: flex;
+    justify-content: center;
+  }
+
+  .modal.show {
+    display: block;
+  }
+
+  .modal-content {
+    margin: auto;
+  }
+
+  .content {
+    font-size: 1.3rem !important;
+    padding: 15px;
+  }
+
+  .tittle {
+    font-size: 2.3rem !important;
+    padding: 15px;
+  }
+
+  .container {
+    padding: 25px 25px;
+
+  }
+}
+/* Pantalla escritorio  */
+@media screen and (min-width: 1028px) {
+  .shadow-lg {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.23);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .shadow-lg:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3), 0 10px 10px rgba(0, 0, 0, 0.22);
+  }
+}

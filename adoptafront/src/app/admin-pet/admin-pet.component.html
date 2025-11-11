@@ -1,0 +1,902 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-1">
+      <app-navsty></app-navsty>
+    </div>
+    <div class="col-lg-11 col-sm-12">
+      <div class="container glass mt-5 mb-5">
+        <div class="header">
+          <h1>Mascotas - {{ sucursalData?.nombre_sucursal }}</h1>
+        </div>
+        <div class="search-section">
+          <button class="btn btn-primary new-button-2" (click)="refreshPage()">
+            <i class="fas fa-sync-alt"></i> Actualizar
+          </button>
+          <div class="search-box mx-auto">
+            <label for="searchPet" class="mx-1">Nombre mascota:</label>
+            <input type="text" id="searchPet" [(ngModel)]="searchPet" class="form-control mr-2"
+              placeholder="Buscar mascota">
+            <button class="btn btn-primary new-button" (click)="search()">Buscar</button>
+          </div>
+          <button class="btn btn-primary new-button-2" (click)="openPetModal()">+ Nueva mascota</button>
+        </div>
+        <div class="selectors">
+          <button class="botones" (click)="showTable('pets')">Mascotas</button>
+          <button class="botones" (click)="showTable('Adoptado')">Adoptadas</button>
+          <button class="botones" (click)="showTable('Pendiente')">Postulaciones</button>
+          <button class="botones" (click)="showTable('reportes')">Reportes</button>
+        </div>
+        <!-- Tabla Mascotas -->
+        <div class="table-container" *ngIf="currentTable === 'pets'">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Foto</th>
+                <th>Nombre Mascota</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pet of filteredPets.reverse()">
+                <td><img [src]="pet.imagen" alt="Foto de {{ pet.nombre }}" height="50" class="img-table rounded-circle">
+                </td>
+                <td>{{ pet.nombre }}</td>
+                <td>{{ pet.estado }}</td>
+                <td class="actions">
+                  <button class="btn btn-danger color" (click)="openDetallesPetModal(pet.id)">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button class="btn btn-primary color-2" (click)="openPetEditModal(pet.id)">
+                    <i class="fas fa-pencil-alt"></i>
+                  </button>
+                  <button class="btn btn-danger color-3" (click)="deletePet(pet.id)">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Tabla Adoptado -->
+        <div class="table-container" *ngIf="currentTable === 'Adoptado'">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Foto</th>
+                <th>Nombre Mascota</th>
+                <th>Nombre Adoptante</th>
+                <th>Correo Adoptante</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pet of filteredPets">
+                <td><img [src]="pet.imagen" alt="Foto de {{ pet.nombre }}" height="50" class="img-table rounded-circle">
+                </td>
+                <td>{{ pet.nombre }}</td>
+                <td>
+                  <ng-container *ngIf="pet.coincidences && pet.coincidences.length > 0">
+                    <div *ngFor="let coincidence of pet.coincidences">
+                      {{ coincidence.profile.nombre_apellido }}
+                    </div>
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container *ngIf="pet.coincidences && pet.coincidences.length > 0">
+                    <div *ngFor="let coincidence of pet.coincidences">
+                      {{ coincidence.profile.email }}
+                    </div>
+                  </ng-container>
+                </td>
+                <td class="actions">
+                  <button class="btn btn-danger color" (click)="openDetallesPetModal(pet.id)">
+                    Detalles Mascota
+                  </button>
+                  <button class="btn btn-primary color-2" (click)="openDetallesProfileModal(pet.id)">
+                    Detalles Adoptante
+                  </button>
+                  <button class="btn btn-danger color-3" (click)="deletePet(pet.id)">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Tabla Pendiente -->
+        <div class="table-container" *ngIf="currentTable === 'Pendiente'">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Foto Mascota</th>
+                <th>Nombre Mascota</th>
+                <th>Nombre Postulante</th>
+                <th>Telefono Postulante</th>
+                <th>Correo Postulante</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pet of filteredPets">
+                <td><img [src]="pet.imagen" alt="Foto de {{ pet.nombre }}" height="50" class="img-table rounded-circle">
+                </td>
+                <td>{{ pet.nombre }}</td>
+                <td>
+                  <ng-container *ngIf="pet.coincidences && pet.coincidences.length > 0">
+                    <div *ngFor="let coincidence of pet.coincidences">
+                      {{ coincidence.profile.nombre_apellido }}
+                    </div>
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container *ngIf="pet.coincidences && pet.coincidences.length > 0">
+                    <div *ngFor="let coincidence of pet.coincidences">
+                      <a [href]="getWhatsappLink(coincidence.profile.telefono)" target="_blank"> +56 {{
+                        coincidence.profile.telefono }} </a>
+                      <i class="fab fa-whatsapp" style="font-size: 4em;"></i>
+                    </div>
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container *ngIf="pet.coincidences && pet.coincidences.length > 0">
+                    <div *ngFor="let coincidence of pet.coincidences">
+                      {{ coincidence.profile.email }}
+                    </div>
+                  </ng-container>
+                </td>
+                <td class="actions">
+                  <button class="btn btn-danger color" (click)="openDetallesProfileModal(pet.id)">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button class="btn btn-success color-3" (click)="Adoption(pet.id)">
+                    Adoptar
+                  </button>
+                  <ng-container *ngIf="pet.coincidences && pet.coincidences.length > 0">
+                    <button class="btn btn-danger color-3" (click)="deleteCoincidence(pet.id, pet.coincidences[0].id)">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </ng-container>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Tabla Reportes -->
+        <div class="table-container" *ngIf="currentTable === 'reportes'">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Email Reportante</th>
+                <th>Fecha de Reporte</th>
+                <th>Tipo de Reporte</th>
+                <th>Email Responsable</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let report of reports">
+                <td>{{ report.mailUserReportante }}</td>
+                <td>{{ report.fechaEvento | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ report.tipoEvento }}</td>
+                <td>{{ report.mailUserResponsable }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mostrar el contador de mascotas -->
+        <div class="d-flex justify-content-end" *ngIf="currentTable === 'pets'">
+          <label>Nº de mascotas: {{ petCount }} </label>
+        </div>
+
+        <!-- Mostrar el contador de mascotas adoptadas -->
+        <div class="d-flex justify-content-end" *ngIf="currentTable === 'Adoptado'">
+          <label>Nº de adoptadas: {{ adoptedPetCount }} </label>
+        </div>
+
+        <!-- Mostrar el contador de postulaciones -->
+        <div class="d-flex justify-content-end" *ngIf="currentTable === 'Pendiente'">
+          <label>Nº de postulaciones: {{ pendingApplicationCount }} </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Registro Mascota -->
+<div id="myModalPet" class="modal" [ngClass]="{'show': isPetModalOpen}"
+  [ngStyle]="{'display': isPetModalOpen ? 'block' : 'none'}">
+  <div>
+    <div class="container mt-5 mb-5">
+      <div class="row justify-content-center">
+        <div class="col-md-5">
+          <div class="card">
+            <span class="close" (click)="closePetModal()">&times;</span>
+            <div class="mb-4 mt-2">
+              <h2>REGISTRO DE MASCOTA</h2>
+            </div>
+            <div class="overflow-y-auto">
+              <!-- Formulario Registrar Mascota -->
+              <div class="card-form">
+                <form [formGroup]="signupPet" (ngSubmit)="onSubmitNewPet()">
+                  <div class="form-column">
+                    <!-- Foto Mascota -->
+                    <div class="form-group">
+                      <label for="photo">Foto mascota:</label>
+                      <div class="img-preview-container">
+                        <img *ngIf="profileImageUrl; else placeholder" [src]="profileImageUrl"
+                          alt="Vista previa de la foto de perfil" class="img-preview img-fluid rounded-circle mb-3">
+                        <ng-template #placeholder>
+                          <img src="../../assets/images/login-signup/photo_pet.jpg" alt="Placeholder"
+                            class="img-preview img-fluid rounded-circle mb-3">
+                        </ng-template>
+                      </div>
+                      <input type="file" id="photo" name="photo" class="form-control" (change)="onFileSelected($event)">
+                      @if (signupPet.get('photo')?.touched && signupPet.get('photo')?.invalid) {
+                      <div class="text-danger">
+                        {{ getPhotoMessage() }}
+                      </div>
+                      }
+                    </div>
+                    <!-- Microchip Mascota -->
+                    <div class="form-group">
+                      <label for="microchip">Microchip:</label>
+                      <input type="text" id="microchip" formControlName="microchip"
+                        placeholder="Ingresa el código del microchip" class="form-control" maxlength="15">
+                      @if (signupPet.get('microchip')?.touched && signupPet.get('microchip')?.invalid)
+                      {
+                      <div class="text-danger">
+                        {{ getMicrochipMessage() }}
+                      </div>
+                      }
+                    </div>
+                    <!-- Nombre Mascota -->
+                    <div class="form-group">
+                      <label for="namePet">Nombre:</label>
+                      <input type="text" id="namePet" formControlName="namePet"
+                        placeholder="Ingresa el nombre de la mascota" class="form-control">
+                      @if (signupPet.get('namePet')?.touched && signupPet.get('namePet')?.invalid) {
+                      <div class="text-danger">
+                        {{ getNamePetMessage() }}
+                      </div>
+                      }
+                    </div>
+                    <!-- Fecha de Nacimiento -->
+                    <div class="form-group">
+                      <label for="dateNac">Fecha de nacimiento:</label>
+                      <input type="date" id="dateNac" formControlName="dateNac"
+                        placeholder="Ingresa tu fecha de nacimiento" class="form-control" [max]="maxDate">
+                      @if (signupPet.get('dateNac')?.touched && signupPet.get('dateNac')?.invalid) {
+                      <div class="text-danger">
+                        {{ getDateNacMessage() }}
+                      </div>
+                      }
+                    </div>
+                    <div class="row mb-1 input-2">
+                      <!-- Especie Mascota -->
+                      <div class="col-md-6 input-2 form-group">
+                        <label for="especie">Especie:</label>
+                        <select id="especie" formControlName="especie" class="form-control"
+                          (change)="onEspecieChange($event)">
+                          <option value="" disabled selected>Selecciona una opción</option>
+                          <option *ngFor="let especie of especies" [value]="especie.id">{{
+                            especie.nombreEspecie }}</option>
+                        </select>
+                        <div *ngIf="signupPet.get('especie')?.touched && signupPet.get('especie')?.invalid"
+                          class="text-danger">
+                          {{ getEspecieMessage() }}
+                        </div>
+                      </div>
+                      <!-- Raza Mascota -->
+                      <div class="col-md-6 input-2 form-group">
+                        <label for="raza">Raza:</label>
+                        <select id="raza" formControlName="raza" class="form-control">
+                          <option value="" disabled selected>Selecciona una opción</option>
+                          <option *ngFor="let raza of razas" [value]="raza.id">{{ raza.nombreRaza }}
+                          </option>
+                        </select>
+                        <div *ngIf="signupPet.get('raza')?.touched && signupPet.get('raza')?.invalid"
+                          class="text-danger">
+                          {{ getRazaMessage() }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mb-1 input-2">
+                      <!-- Sexo Mascota -->
+                      <div class="col-md-6 input-2 form-group">
+                        <label for="gender">Sexo:</label>
+                        <select id="gender" formControlName="gender" class="form-control">
+                          <option value="" disabled selected>Selecciona una opción</option>
+                          <option *ngFor="let gender of petGenders" [value]="gender.id">{{
+                            gender.nombre
+                            }}</option>
+                        </select>
+                        @if (signupPet.get('gender')?.touched && signupPet.get('gender')?.invalid) {
+                        <div class="text-danger">
+                          {{ getGenderMessage() }}
+                        </div>
+                        }
+                      </div>
+                      <!-- Esterilizado Mascota -->
+                      <div class="col-md-6 input-2 form-group">
+                        <label for="esterilizado">Esterilizado:</label>
+                        <select id="esterilizado" formControlName="esterilizado" class="form-control">
+                          <option value="" disabled selected>Selecciona una opción</option>
+                          <option *ngFor="let esterilizado of petEsterilizado" [value]="esterilizado.id">
+                            {{
+                            esterilizado.nombre }}</option>
+                        </select>
+                        @if (signupPet.get('esterilizado')?.touched &&
+                        signupPet.get('esterilizado')?.invalid) {
+                        <div class="text-danger">
+                          {{ getEsterilizadoMessage() }}
+                        </div>
+                        }
+                      </div>
+                    </div>
+                    <div class="row mb-1 input-2">
+                      <!-- Color Mascota -->
+                      <div class="col-md-6 input-2  form-group">
+                        <label for="color">Color:</label>
+                        <select id="color" formControlName="color" class="form-control">
+                          <option value="" disabled selected>Selecciona una opción</option>
+                          <option *ngFor="let color of petColor" [value]="color.id">{{ color.nombre }}
+                          </option>
+                        </select>
+                        @if (signupPet.get('color')?.touched && signupPet.get('color')?.invalid) {
+                        <div class="text-danger">
+                          {{ getColorMessage() }}
+                        </div>
+                        }
+                      </div>
+                      <!-- Patrón Mascota -->
+                      <div class="col-md-6 input-2 form-group">
+                        <label for="patron">Patrón:</label>
+                        <select id="patron" formControlName="patron" class="form-control">
+                          <option value="" disabled selected>Selecciona una opción</option>
+                          <option *ngFor="let patron of petPatron" [value]="patron.id">{{
+                            patron.nombre }}
+                          </option>
+                        </select>
+                        @if (signupPet.get('patron')?.touched && signupPet.get('patron')?.invalid) {
+                        <div class="text-danger">
+                          {{ getPatronMessage() }}
+                        </div>
+                        }
+                      </div>
+                    </div>
+                    <div class="row mb-1 input-2">
+                      <!-- Actividad Mascota -->
+                      <div class="col-md-6 input-2 form-group">
+                        <label for="actividad">Actividad:</label>
+                        <select id="actividad" formControlName="actividad" class="form-control">
+                          <option value="" disabled selected>Selecciona una opción</option>
+                          <option *ngFor="let option of petActividad" [value]="option.id">{{
+                            option.nombre
+                            }}</option>
+                        </select>
+                        @if (signupPet.get('actividad')?.touched &&
+                        signupPet.get('actividad')?.invalid) {
+                        <div class="text-danger">
+                          {{ getActividadMessage() }}
+                        </div>
+                        }
+                      </div>
+                      <!-- Registro Vacunas Mascota -->
+                      <div class="col-md-6 input-2 form-group">
+                        <label for="vacunas">Tiene vacunas:</label>
+                        <select id="vacunas" formControlName="vacunas" class="form-control"
+                          (change)="onVacunasChange($event)">
+                          <option value="" disabled selected>Selecciona una opción</option>
+                          <option value="true">Sí</option>
+                          <option value="false">No</option>
+                        </select>
+                        @if (signupPet.get('vacunas')?.value === 'true') {
+                        <div class="text">
+                          Especifica que vacunas tiene en la descripción.
+                        </div>
+                        }
+                        @if (signupPet.get('vacunas')?.touched && signupPet.get('vacunas')?.invalid) {
+                        <div class="text-danger">
+                          {{ getVacunasMessage() }}
+                        </div>
+                        }
+                      </div>
+                    </div>
+                    <div class="row mb-1 input-2">
+                      <!-- Sociabilidad Mascota -->
+                      <div class="col-md-6 input-2 form-group">
+                        <div class="d-flex align-items-center">
+                          <label for="sociable" class="me-2">Sociable:</label>
+                          <div class="form-check form-check-inline m-0">
+                            <input class="form-check-input" type="checkbox" formControlName="sociable" id="sociable"
+                              (change)="onSociableChange($event)">
+                          </div>
+                        </div>
+                        @if (signupPet.get('sociable')?.touched &&
+                        signupPet.get('sociable')?.invalid) {
+                        <div class="text-danger">
+                          {{ getSociableMessage() }}
+                        </div>
+                        }
+                      </div>
+                      <!-- Tratamiento Mascota -->
+                      <div class="col-md-6 input-2 form-group">
+                        <div class="d-flex align-items-center">
+                          <label for="tratamiento" class="me-2">Necesita tratamiento:</label>
+                          <div class="form-check form-check-inline m-0">
+                            <input class="form-check-input" type="checkbox" formControlName="tratamiento"
+                              id="tratamiento" (change)="onTratamientoChange($event)">
+                          </div>
+                        </div>
+                        @if (signupPet.get('tratamiento')?.touched &&
+                        signupPet.get('tratamiento')?.invalid) {
+                        <div class="text-danger">
+                          {{ getTratamientoMessage() }}
+                        </div>
+                        }
+                      </div>
+                    </div>
+                    <!-- Detalle Tratamiento Mascota -->
+                    <div class="form-group">
+                      @if (signupPet.get('tratamiento')?.value === true) {
+                      <label for="detalleTratamiento">Detalles del tratamiento:</label>
+                      <textarea class="form-control" formControlName="detalleTratamiento" id="detalleTratamiento"
+                        placeholder="Ingresa que tratamiento necesita la mascota"></textarea>
+                      @if (signupPet.get('detalleTratamiento')?.touched &&
+                      signupPet.get('detalleTratamiento')?.invalid) {
+                      <div class="text-danger">
+                        {{ getDetalleTratamientoMessage() }}
+                      </div>
+                      }
+                      }
+                    </div>
+                    <!-- Descripción Mascota -->
+                    <div class="form-group">
+                      <label for="description">Descripción:</label>
+                      <textarea id="description" formControlName="description" placeholder="Ingresa una descripción"
+                        class="form-control"></textarea>
+                      @if (signupPet.get('description')?.touched &&
+                      signupPet.get('description')?.invalid)
+                      {
+                      <div class="text-danger">
+                        {{ getDescriptionMessage() }}
+                      </div>
+                      }
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- Botón Registrar -->
+              <div class="button-container mb-4">
+                <button (click)="onSubmitNewPet()" type="submit" class="btn-1 btn-primary mb-4 save">Registrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Edición Mascota -->
+<div id="myModalPetEdit" class="modal" [ngClass]="{'show': isPetEditModalOpen}"
+  [ngStyle]="{'display': isPetEditModalOpen ? 'block' : 'none'}">
+  <div>
+    <div class="container mt-5 mb-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6 card-form card">
+          <div>
+            <span class="close" (click)="closePetEditModal()">&times;</span>
+            <div class="mb-4 mt-2">
+              <h2>EDITAR MASCOTA</h2>
+            </div>
+            <!-- Formulario Editar Mascota -->
+            <form [formGroup]="modPetForm" (ngSubmit)="onSubmitEditPet()">
+              <div class="form-column">
+                <!-- Foto Mascota -->
+                <div class="form-group">
+                  <label for="photo">Foto mascota:</label>
+                  <div class="img-preview-container">
+                    <img *ngIf="profileImageUrl; else placeholder" [src]="profileImageUrl"
+                      alt="Vista previa de la foto de mascota" class="img-preview img-fluid rounded-circle mb-3">
+                    <ng-template #placeholder>
+                      <img src="../../assets/images/login-signup/photo_pet.jpg" alt="Placeholder"
+                        class="img-preview img-fluid rounded-circle mb-3">
+                    </ng-template>
+                  </div>
+                  <input type="file" id="photo" name="photo" class="form-control" (change)="onFileSelected($event)">
+                  @if (modPetForm.get('photo')?.touched && modPetForm.get('photo')?.invalid){
+                  <div class="text-danger">
+                    {{ getPhotoMessage() }}
+                  </div>
+                  }
+                </div>
+                <!-- Microchip Mascota -->
+                <div class="form-group">
+                  <label for="microchip">Microchip:</label>
+                  <input type="text" id="microchip" formControlName="microchip"
+                    placeholder="Ingresa el nombre de la mascota" class="form-control">
+                  @if (modPetForm.get('microchip')?.touched && modPetForm.get('microchip')?.invalid) {
+                  <div class="text-danger">
+                    {{ getMicrochipMessage() }}
+                  </div>
+                  }
+                </div>
+                <!-- Nombre Mascota   -->
+                <div class="form-group">
+                  <label for="namePet">Nombre:</label>
+                  <input type="text" id="namePet" formControlName="namePet"
+                    placeholder="Ingresa el nombre de la mascota" class="form-control">
+                  @if (modPetForm.get('namePet')?.touched && modPetForm.get('namePet')?.invalid) {
+                  <div class="text-danger">
+                    {{ getNamePetMessage() }}
+                  </div>
+                  }
+                </div>
+                <!-- Fecha de Nacimiento -->
+                <div class="form-group">
+                  <label for="dateNac">Fecha de nacimiento:</label>
+                  <input type="date" id="dateNac" formControlName="dateNac"
+                    placeholder="Ingresa el nombre de la mascota" class="form-control">
+                  @if (modPetForm.get('dateNac')?.touched && modPetForm.get('dateNac')?.invalid) {
+                  <div class="text-danger">
+                    {{ getDateNacMessage() }}
+                  </div>
+                  }
+                </div>
+                <div class="row mb-1 input-2">
+                  <!-- Especie Mascota -->
+                  <div class="col-md-6 input-2 form-group">
+                    <label for="especie">Especie:</label>
+                    <select id="especie" formControlName="especie" class="form-control" (change)="onEspecieChange($event)">
+                      <option value="" disabled selected>Selecciona una opción</option>
+                      <option *ngFor="let especie of especies" [value]="especie.id">{{ especie.nombreEspecie }}</option>
+                    </select>
+                    @if (modPetForm.get('especie')?.touched && modPetForm.get('especie')?.invalid) {
+                    <div class="text-danger">
+                      {{ getEspecieMessage() }}
+                    </div>
+                    }
+                  </div>
+                  <!-- Raza Mascota -->
+                  <div class="col-md-6 input-2 form-group">
+                    <label for="raza">Raza:</label>
+                    <select id="raza" formControlName="raza" class="form-control">
+                      <option value="" disabled selected>Selecciona una opción</option>
+                      <option *ngFor="let raza of razas" [value]="raza.id"> {{ raza.nombreRaza }}</option>
+                    </select>
+                    @if (modPetForm.get('raza')?.touched && modPetForm.get('raza')?.invalid) {
+                    <div class="text-danger">
+                      {{ getRazaMessage() }}
+                    </div>
+                    }
+                  </div>
+                </div>
+                <div class="row mb-1 input-2">
+                  <!-- Sexo Mascota -->
+                  <div class="col-md-6 input-2 form-group">
+                    <label for="gender">Sexo:</label>
+                    <select id="gender" formControlName="gender" class="form-control">
+                      <option value="" disabled selected>Selecciona una opción</option>
+                      <option *ngFor="let gender of petGenders" [value]="gender.id">
+                        {{
+                        gender.nombre }}</option>
+                    </select>
+                    @if (modPetForm.get('gender')?.touched && modPetForm.get('gender')?.invalid) {
+                    <div class="text-danger">
+                      {{ getGenderMessage() }}
+                    </div>
+                    }
+                  </div>
+                  <!-- Esterilizado Mascota -->
+                  <div class="col-md-6 input-2 form-group">
+                    <label for="esterilizado">Esterilizado:</label>
+                    <select id="esterilizado" formControlName="esterilizado" class="form-control">
+                      <option value="" disabled selected>Selecciona una opción</option>
+                      <option *ngFor="let esterilizado of petEsterilizado" [value]="esterilizado.id">
+                        {{
+                        esterilizado.nombre }}</option>
+                    </select>
+                    @if (modPetForm.get('esterilizado')?.touched && modPetForm.get('esterilizado')?.invalid) {
+                    <div class="text-danger">
+                      {{ getEsterilizadoMessage() }}
+                    </div>
+                    }
+                  </div>
+                </div>
+
+                <div class="row mb-1 input-2">
+                  <!-- Color Mascota -->
+                  <div class="col-md-6 input-2 form-group">
+                    <label for="color">Color:</label>
+                    <select id="color" formControlName="color" class="form-control">
+                      <option value="" disabled selected>Selecciona una opción</option>
+                      <option *ngFor="let color of petColor" [value]="color.id">
+                        {{
+                        color.nombre }}</option>
+                    </select>
+                    @if (modPetForm.get('color')?.touched && modPetForm.get('color')?.invalid) {
+                    <div class="text-danger">
+                      {{ getColorMessage() }}
+                    </div>
+                    }
+                  </div>
+                  <!-- Patron Mascota -->
+                  <div class="col-md-6 input-2 form-group">
+                    <label for="patron">Patrón:</label>
+                    <select id="patron" formControlName="patron" class="form-control">
+                      <option value="" disabled selected>Selecciona una opción</option>
+                      <option *ngFor="let patron of petPatron" [value]="patron.id">
+                        {{
+                        patron.nombre }}</option>
+                    </select>
+                    @if (modPetForm.get('patron')?.touched && modPetForm.get('patron')?.invalid) {
+                    <div class="text-danger">
+                      {{ getPatronMessage() }}
+                    </div>
+                    }
+                  </div>
+                </div>
+                <div class="row mb-1 input-2">
+
+                  <!-- Actividad Mascota -->
+                  <div class="col-md-6 input-2 form-group">
+                    <label for="actividad">Actividad:</label>
+                    <select id="actividad" formControlName="actividad" class="form-control">
+                      <option value="" disabled selected>Selecciona una opción</option>
+                      <option *ngFor="let option of petActividad" [value]="option.id">{{
+                        option.nombre
+                        }}</option>
+                    </select>
+                    @if (modPetForm.get('actividad')?.touched && modPetForm.get('actividad')?.invalid) {
+                    <div class="text-danger">
+                      {{ getActividadMessage() }}
+                    </div>
+                    }
+                  </div>
+                  <!-- Registro Vacunas Mascota -->
+                  <div class="col-md-6 input-2 form-group">
+                    <label for="vacunas">Tiene vacunas:</label>
+                    <select id="vacunas" formControlName="vacunas" class="form-control"
+                      (change)="onVacunasChange($event)">
+                      <option value="" disabled selected>Selecciona una opción</option>
+                      <option value="true">Sí</option>
+                      <option value="false">No</option>
+                    </select>
+                    @if (modPetForm.get('vacunas')?.value === 'true') {
+                    <div class="text-sucess">
+                      Especifica que vacunas tiene en la descripción.
+                    </div>
+                    }
+                    @if (modPetForm.get('vacunas')?.touched && modPetForm.get('vacunas')?.invalid) {
+                    <div class="text-danger">
+                      {{ getVacunasMessage() }}
+                    </div>
+                    }
+                  </div>
+                </div>
+                <div class="row mb-1 input-2">
+                  <!-- Sociabilidad Mascota -->
+                  <div class="col-md-6 input-2 form-group">
+                    <div class="d-flex align-items-center">
+                      <label for="sociable" class="me-2">Sociable:</label>
+                      <div class="form-check form-check-inline m-0">
+                        <input class="form-check-input" type="checkbox" formControlName="sociable" id="sociable"
+                          (change)="onSociableChange($event)">
+                      </div>
+                    </div>
+                    @if (modPetForm.get('sociable')?.touched && modPetForm.get('sociable')?.invalid) {
+                    <div class="text-danger">
+                      {{ getSociableMessage() }}
+                    </div>
+                    }
+                  </div>
+                  <!-- Tratamiento Mascota -->
+                  <div class="col-md-6 input-2 form-group">
+                    <div class="d-flex align-items-center">
+                      <label for="tratamiento" class="me-2">Necesita tratamiento:</label>
+                      <div class="form-check form-check-inline m-0">
+                        <input class="form-check-input" type="checkbox" formControlName="tratamiento" id="tratamiento"
+                          (change)="onTratamientoChange($event)">
+                      </div>
+                    </div>
+                    @if (modPetForm.get('tratamiento')?.touched && modPetForm.get('tratamiento')?.invalid) {
+                    <div class="text-danger">
+                      {{ getTratamientoMessage() }}
+                    </div>
+                    }
+                  </div>
+                </div>
+                <!-- Detalle Tratamiento Mascota -->
+                <div class="form-group">
+                  @if (modPetForm.get('tratamiento')?.value === true) {
+                  <label for="detalleTratamiento">Detalles del tratamiento:</label>
+                  <textarea class="form-control" formControlName="detalleTratamiento" id="detalleTratamiento"
+                    placeholder="Ingresa que tratamiento necesita la mascota"></textarea>
+                  @if (modPetForm.get('detalleTratamiento')?.touched &&
+                  modPetForm.get('detalleTratamiento')?.invalid) {
+                  <div class="text-danger">
+                    {{ getDetalleTratamientoMessage() }}
+                  </div>
+                  }
+                  }
+                </div>
+                <!-- Descripción Mascota -->
+                <div class="form-group">
+                  <label for="description">Descripción:</label>
+                  <textarea id="description" formControlName="description" placeholder="Ingresa una descripción"
+                    class="form-control"></textarea>
+                  @if (modPetForm.get('description')?.touched &&
+                  modPetForm.get('description')?.invalid)
+                  {
+                  <div class="text-danger">
+                    {{ getDescriptionMessage() }}
+                  </div>
+                  }
+                </div>
+                <!-- Botón Guardar Cambios -->
+                <div class="button-container mb-4">
+                  <button type="submit" class="btn-1 mb-3">Guardar cambios</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Detalles Mascota -->
+<div id="myModalPetDetalles" class="modal" [ngClass]="{'show': isPetDetallesModalOpen}"
+  [ngStyle]="{'display': isPetDetallesModalOpen ? 'block' : 'none'}">
+  <div>
+    <div class="container mt-5 mb-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6 card-form card">
+          <div>
+            <span class="close" (click)="closeDetallesPetModal()">&times;</span>
+            <div class="mb-4 mt-2">
+              <h2>DETALLES MASCOTA</h2>
+            </div>
+            <div>
+              <div *ngIf="petSelected">
+                <div class="form-column">
+                  <!-- Foto Mascota -->
+                  <div class="mb-3 input-container text-center">
+                    <label for="">Foto mascota:</label>
+                    <img [src]="petSelected.imagen" alt="Foto de la mascota"
+                      class="img-preview img-fluid rounded-circle mx-auto">
+                  </div>
+                  <!-- Microchip Mascota -->
+                  <div class="mb-1 input-container">
+                    <label for="">Microchip: {{ petSelected.microchip }}</label>
+                  </div>
+                  <!-- Nombre Mascota -->
+                  <div class="mb-1 input-container">
+                    <label for="">Nombre: {{ petSelected.nombre }}</label>
+                  </div>
+                  <!-- Fecha de Nacimiento -->
+                  <div class="mb-1 input-container">
+                    <label for="">Fecha de Nacimiento: {{ petSelected.fecha_nacimiento | date: 'dd/MM/yyyy' }}</label>
+                  </div>
+                  <!-- Especie Mascota -->
+                  <div class="mb-1 input-container">
+                    <label for="">Especie: {{ petSelected.nombreEspecie }}</label>
+
+                  </div>
+                  <!-- Raza Mascota -->
+                  <div class="mb-1 input-container">
+                    <label for="">Raza: {{ petSelected.nombreRaza }}</label>
+
+                  </div>
+                  <!-- Sexo Mascota -->
+                  <div class="mb-1 input-container">
+                    <label for="">Sexo: {{ petSelected.sexo }}</label>
+                    <label></label>
+                  </div>
+                  <!-- Color Mascota -->
+                  <div class="mb-1 input-container">
+                    <label for="">Color: {{ petSelected.color }}</label>
+                  </div>
+                  <!-- Patrón Mascota -->
+                  <div class="mb-1 input-container">
+                    <label for="">Patrón: {{ petSelected.patron }}</label>
+                  </div>
+                  <!-- Esterilizado Mascota -->
+                  <div class="mb-1 input-container">
+                    <label for="">Esterilizado: {{ petSelected.esterilizado ? 'Sí' : 'No' }}</label>
+                  </div>
+                  <!-- Actividad Mascota -->
+                  <div class="mb-1 input-container">
+                    <label for="">Actividad: {{ petSelected.actividad }}</label>
+                  </div>
+                  <!-- Vacunas Mascota -->
+                  <div class="mb-1 input-container">
+                    <label for="">Vacunas: {{ petSelected.vacunas ? 'Sí' : 'No' }}</label>
+                  </div>
+                  <!-- Sociable Mascota -->
+                  <div class="mb-1 input-container">
+                    <label for="">Sociable: {{ petSelected.sociable ? 'Sí' : 'No' }}</label>
+                  </div>
+                  <!-- Tratamiento Mascota -->
+                  <div class="mb-1 input-container">
+                    <label for="">Tratamiento: {{ petSelected.tratamiento ? 'Sí' : 'No' }}</label>
+                  </div>
+                  <!-- Detalle  Tratamiento Mascota -->
+                  <div class="mb-1 input-container">
+                    <label *ngIf="petSelected.tratamiento" for="">Detalle del tratamiento: {{
+                      petSelected.tratamientoDescripcion }}</label>
+                  </div>
+                  <!-- Descripción Mascota -->
+                  <div class="mb-1 input-container">
+                    <label for="">Descripción: {{ petSelected.descripcion }}</label>
+                  </div>
+                  <!-- Estado Mascota -->
+                  <div class="mb-1 input-container">
+                    <label for="">Estado: {{ petSelected.estado }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Detalles Usuario -->
+<div id="myModalProfileDetalles" class="modal" [ngClass]="{'show': isProfileDetallesModalOpen}"
+  [ngStyle]="{'display': isProfileDetallesModalOpen ? 'block' : 'none'}">
+  <div>
+    <div class="container mt-5 mb-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6 card-form card">
+          <div>
+            <span class="close" (click)="closeDetallesProfileModal()">&times;</span>
+            <div class="mb-4 mt-2" *ngIf="currentTable === 'Pendiente'; else adoptanteDetails">
+              <h2>DETALLES POSTULANTE</h2>
+            </div>
+            <ng-template #adoptanteDetails>
+              <h2>DETALLES ADOPTANTE</h2>
+            </ng-template>
+            <div>
+              <div *ngIf="coincidence">
+                <div class="form-column">
+                  <!-- Nombre Usuario -->
+                  <div class="mb-1 input-container">
+                    <label for="">Nombre: {{ coincidence.profile.nombre_apellido }}</label>
+                  </div>
+                  <!-- Fecha de Nacimiento -->
+                  <div class="mb-1 input-container">
+                    <label for="">Fecha de nacimiento: {{ coincidence.profile.fecha_nacimiento | date: 'dd/MM/yyyy'
+                      }}</label>
+                  </div>
+                  <!-- Domicilio Usuario -->
+                  <div class="mb-1 input-container">
+                    <label for="">Domicilio: {{ coincidence.profile.domicilio }}</label>
+                  </div>
+                  <!-- Comuna Usuario -->
+                  <div class="mb-1 input-container">
+                    <label for="">Comuna: {{ coincidence.profile.comuna.nombre }}</label>
+                  </div>
+                  <!-- Rut Usuario -->
+                  <div class="mb-1 input-container">
+                    <label for="">Rut: {{ coincidence.profile.rut }}</label>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="!coincidence">
+                <p>No se encontraron coincidencias.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

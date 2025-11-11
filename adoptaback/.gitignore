@@ -1,0 +1,28 @@
+# Virtual environment
+/env/
+
+# Compiled Python files
+*.pyc
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Local development settings
+/local_settings.py
+
+# Static files (usually collected by Django's collectstatic)
+/static/
+
+# Media files (usually uploaded by users)
+/media/
+
+# SQLite database file
+*.sqlite3
+
+# SQLite database file created by Django
+db.sqlite3
+
+# Ignorar migraciones
+__init__.py
+
+/0001_initial.py/

@@ -1,0 +1,163 @@
+/* General Css */
+.row-p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 5px;
+}
+
+.profile-section {
+  background-color: #1a2533 !important;
+  border-radius: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+  margin-right: 20px;
+  min-height: 80vh;
+  max-width: 600px;
+
+}
+
+.account-section {
+  background-color: #1a2533 !important;
+  border-radius: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+  margin-left: 20px;
+  min-height: 80vh;
+  max-width: 600px;
+}
+
+.profile-content,
+.account-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  justify-content: center;
+  align-items: center;
+}
+
+.b {
+  width: 15%;
+  margin-top: 10px;
+  border-radius: 50%;
+  padding: 6px;
+}
+
+button {
+  width: 65%;
+  border-radius: 100px !important;
+  background-color: #4682B4;
+  color: #ffffff;
+  border: none;
+  padding: 6px;
+  margin-top: 10px;
+
+}
+
+.btn-1 {
+  margin-top: 10px;
+  width: 70%;
+  border-radius: 100px !important;
+  background-color: #4682B4;
+  color: #ffffff;
+  border: none;
+  text-align: center;
+  padding: 6px;
+  margin-left: 15%;
+}
+
+button:hover {
+  background-color: #87CEEB;
+}
+
+.img-container img,
+.imagen {
+  width: 100%;
+  max-width: 150px;
+  height: 150px;
+  border-radius: 100%;
+  margin-left: 45px;
+}
+
+h2 {
+  font-family: "Vollkorn", serif;
+  color: #ffffff !important;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+label {
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  color: #ffffff !important;
+  font-weight: bold;
+}
+
+p {
+  display: flex;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  color: #000;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px !important;
+  outline: none;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  height: 40px;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+
+@media screen and (max-width: 768px) {
+
+  .profile-section,
+  .account-section {
+    margin: 20px;
+  }
+
+  label {
+    font-size: 12px;
+  }
+
+  input,
+  select {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  button {
+    font-size: 13px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .btn-1 {
+    padding: 10px;
+
+  }
+}
+
+.col-1 {
+  padding: 0px 0px !important;
+}

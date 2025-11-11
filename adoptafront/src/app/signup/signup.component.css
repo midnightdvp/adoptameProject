@@ -1,0 +1,205 @@
+/* General Css */
+label {
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  color: #ffffff !important;
+  font-weight: bold;
+}
+
+h2 {
+  font-family: "Vollkorn", serif;
+  color: #ffffff !important;
+  font-size: 45px;
+  text-align: center;
+}
+
+p {
+  margin-top: 15px !important;
+}
+
+a {
+  color: #ffffff;
+  display: flex;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+}
+
+/* Estilos del contenedor principal */
+.container.glass {
+  border-radius: 25px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+  background-color: rgba(255, 255, 255, 0.212);
+  backdrop-filter: blur(10px);
+}
+
+.background-img {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background: url('../../assets/images/login-signup/gif-perroTransparenteOG.gif') no-repeat center center;
+}
+
+/* Estilos del formulario */
+.card-form {
+  background-image: linear-gradient(to bottom, #4682B4, #87CEEB);
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  max-height: 700px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.overflow-y-auto {
+  max-height: 100%;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-form h2 {
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.input-container label {
+  margin-bottom: 5px;
+}
+
+.input-container input,
+.input-container select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 100px;
+  outline: none;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  height: 40px;
+}
+
+/* Estilos del botón */
+.btn-content {
+  width: 300px !important;
+  height: 35px !important;
+  padding: 10px !important;
+  transition-duration: 0.4s !important;
+  border: none !important;
+  border-radius: 100px !important;
+  cursor: pointer !important;
+  font-family: "Roboto", sans-serif !important;
+  font-size: 15px !important;
+  text-align: center !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  background-color: #1a2533;
+  color: #ffffff;
+}
+
+.btn-div {
+  margin-top: 10px !important;
+}
+
+/* Estilos del botón al pasar el mouse */
+/* button:hover {
+  background-color: #87CEEB !important;
+  color: #000000 !important;
+} */
+
+/* Estilos adicionales */
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  width: 100%;
+  color: white;
+}
+
+.logo {
+  width: 250px;
+  height: 200px;
+}
+.shadow-lg-Fly {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.23);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.shadow-lg-Fly:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.titleRadius {
+  border-radius: 150px !important;
+  padding: 10px !important;
+  margin: 5px !important
+}
+
+.logo-container img {
+  width: 150px;
+  height: auto;
+}
+
+.img-preview-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 5x;
+}
+
+.img-preview {
+  max-width: 100%;
+  max-height: 200px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.no-select {
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+/Edge */
+  user-select: none;
+  /* Standard */
+  cursor: pointer;
+}
+
+.btn-link {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+}

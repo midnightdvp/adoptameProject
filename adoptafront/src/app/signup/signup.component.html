@@ -1,0 +1,117 @@
+<div class="container glass mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 card-form">
+      <div class="logo-container">
+        <img class="logo" src="../../assets/images/login-signup/adopta.svg" alt="Logo">
+      </div>
+      <div class="mb-4 mt-2 ">
+        <h2 class="shadow-lg-Fly titleRadius">REGISTRO DE USUARIO</h2>
+      </div>
+      <div class="overflow-y-auto">
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+          <!-- Foto de perfil -->
+          <div class="mb-3 input-container">
+            <label for="photo">Foto de perfil:</label>
+            <div class="img-preview-container" *ngIf="profileImageUrl">
+              <img [src]="profileImageUrl" alt="Vista previa de la foto de perfil" class="img-preview  rounded-circle">
+            </div>
+            <input type="file" id="photo" name="photo" class="form-control" (change)="onFileSelected($event)">
+            @if (signupForm.get('photo')?.touched && signupForm.get('photo')?.invalid) {
+            <div class="text-danger">
+              {{ getPhotoMessage() }}
+            </div>
+            }
+          </div>
+          <!-- RUT -->
+          <div class="mb-3 input-container">
+            <label for="rut">RUT:</label>
+            <input type="text" id="rut" formControlName="rut" (input)="formatRut($event)" placeholder="Ingresa tu RUT"
+              class="form-control">
+            @if (signupForm.get('rut')?.touched && signupForm.get('rut')?.invalid) {
+            <div class="text-danger">
+              {{ getRutMessage() }}
+            </div>
+            }
+          </div>
+          <!-- Nombre completo -->
+          <div class="mb-3 input-container">
+            <label for="name">Nombre completo:</label>
+            <input type="text" id="name" formControlName="name" placeholder="Ingresa tu nombre completo"
+              class="form-control">
+            @if (signupForm.get('name')?.touched && signupForm.get('name')?.invalid) {
+            <div class="text-danger">
+              {{ getNameMessage() }}
+            </div>
+            }
+          </div>
+          <!-- Teléfono -->
+          <div class="mb-3 input-container">
+            <label for="telefono">Teléfono:</label>
+            <input type="text" id="telefono" formControlName="telefono" placeholder="Ingresa tu teléfono"
+              class="form-control" (input)="formatPhone($event)">
+            @if (signupForm.get('telefono')?.touched && signupForm.get('telefono')?.invalid) {
+            <div class="text-danger">
+              {{ getTelefonoMessage() }}
+            </div>
+            }
+          </div>
+          <!-- Fecha de nacimiento -->
+          <div class="mb-3 input-container">
+            <label for="dateNac">Fecha de nacimiento:</label>
+            <input type="date" id="dateNac" formControlName="dateNac" placeholder="Ingresa tu fecha de nacimiento"
+              class="form-control" [attr.max]="maxDate" [attr.min]="minDate"
+              (focus)="setMinMaxDates()">
+            @if (signupForm.get('dateNac')?.touched && signupForm.get('dateNac')?.invalid) {
+            <div class="text-danger">
+              {{ getDateNacMessage() }}
+            </div>
+            }
+          </div>
+          <!-- Región -->
+          <div class="mb-3 input-container">
+            <label for="region">Región:</label>
+            <select id="region" formControlName="region" class="form-control" (change)="onRegionChange($event)">
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option *ngFor="let region of regions" [value]="region.id">{{ region.nombre }}</option>
+            </select>
+            @if (signupForm.get('region')?.touched && signupForm.get('region')?.invalid) {
+            <div class="text-danger">
+              {{ getRegionMessage() }}
+            </div>
+            }
+          </div>
+          <!-- Comuna -->
+          <div class="mb-3 input-container">
+            <label for="commune">Comuna:</label>
+            <select id="commune" formControlName="commune" class="form-control">
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option *ngFor="let commune of communes" [value]="commune.id">{{ commune.nombre }}</option>
+            </select>
+            @if (signupForm.get('commune')?.touched && signupForm.get('commune')?.invalid) {
+            <div class="text-danger">
+              {{ getCommuneMessage() }}
+            </div>
+            }
+          </div>
+          <!-- Domicilio -->
+          <div class="mb-3 input-container">
+            <label for="address">Dirección:</label>
+            <input type="text" id="address" formControlName="address" placeholder="Ingresa tu dirección"
+              class="form-control">
+            @if (signupForm.get('address')?.touched && signupForm.get('address')?.invalid) {
+            <div class="text-danger">
+              {{ getAddressMessage() }}
+            </div>
+            }
+          </div>
+        </form>
+      </div>
+      <!-- Botón registrarse -->
+      <div class="mb-4 btn-div">
+        <button (click)="onSubmit()" type="submit"
+          class="btn btn-secondary mb-3 btn-content shadow-lg">Registrarse</button>
+      </div>
+    </div>
+    <div class="col-md-6 background-img"></div>
+  </div>
+</div>

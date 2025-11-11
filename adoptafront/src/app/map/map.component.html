@@ -1,0 +1,127 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-1">
+      <app-navsty></app-navsty>
+    </div>
+    <div class="col-lg-11 col-sm-12">
+      <div class="map-container">
+        <div id="map"></div>
+        @if(userRol === "adoptante"){
+          <button type="button" class="btn btn-danger btn-alerta" (click)="confirmZone(true)">Alerta</button>
+        }
+        @if ((userAdoptante) && !(popUserAdoptante) && !(userOrganizacion)) {
+          <div class="card popAlert align-items-center shadow">
+            <img src="../../assets/images/login-signup/adopta.svg" class="imgLogo" alt="...">
+            <div class="card-body">
+              <h4 class="card-title">👀 Mantente pendiente 👀</h4>
+              <p class="card-text">Pronto algún usuario de nuestras organizaciones atenderá tu emergencia</p>
+            </div>
+          </div>
+        }@else if (popUserAdoptante && !(userAdoptante) && !(userOrganizacion)) {
+          <div class="card cardUsers align-items-center shadow">
+            <img src="../../assets/images/login-signup/adopta.svg" class="imgLogo" alt="...">
+            <div class="card-body">
+              <h4 class="card-title">Indicanos la siguiente informacion:</h4>
+              <p class="card-text">Debes confirmar tu region y comuna <br>una vez confirmada la zona de la emergencia
+                procederemos a buscar un usuario que pueda atenderte</p>
+              <form action="" [formGroup]="eventForm">
+                <!-- Tipo Emergencia -->
+                <div class="mb-3 input-container">
+                  <label for="tipoEmergencia">Tipo de Emergencia:</label>
+                  <select id="tipoEmergencia" formControlName="tipoEmergencia" class="form-control">
+                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option *ngFor="let ak of alertKind" [value]="ak.id">{{ ak.nombre }}</option>
+                  </select>
+                </div>
+                <!-- Región -->
+                <div class="mb-3 input-container">
+                  <label for="region">Región:</label>
+                  <select id="region" formControlName="region" class="form-control" (change)="onRegionChange($event)">
+                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option *ngFor="let region of regions" [value]="region.id">{{ region.nombre }}</option>
+                  </select>
+                </div>
+                <!-- Comuna -->
+                <div class="mb-3 input-container">
+                  <label for="commune">Comuna:</label>
+                  <select id="commune" formControlName="commune" class="form-control">
+                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option *ngFor="let commune of communes" [value]="commune.id">{{ commune.nombre }}</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+            <button href="#" class="btn btn-primary my-5" (click)="addMarkerAtCurrentLocation()">Confirmar Zona</button>
+          </div>
+        }@else if (userOrganizacion && !userAdoptante ) {
+          <div class="card popAlert align-items-center justify-content-center shadow">
+            <img src="../../assets/images/login-signup/adopta.svg" class="imgLogo" alt="...">
+            <div class="card-body ">
+              <h1 class="card-title">⚠ Emergencia ⚠</h1>
+              <p class="card-text">{{ events[currentIndex]?.userReportante }} necesita de tu ayuda <br>¿Decides atender a
+                la emergencia?</p>
+            </div>
+            <div class="container-fluid">
+              <div class="row event-navigation justify-content-center ">
+                <div class="col-4 ">
+                  <!-- Anterior -->
+                  <button class="btn btn-secondary screenPer" (click)="previousEvent()" [disabled]="currentIndex === 0">
+                    &lt;
+                  </button>
+                </div>
+                <div class="col-4 sizing">
+                  <div class="event-details">
+                    <button class="btn btn-outline-secondary dataEvent"
+                      (click)="selectEvent( events[currentIndex]?.idEvento)"> {{ events[currentIndex]?.tipoEvento }} - {{
+                      events[currentIndex]?.userReportante }}</button>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <!-- Boton siguiente -->
+                  <button class="btn btn-secondary screenPer2" (click)="nextEvent()"
+                    [disabled]="currentIndex === events.length - 1">
+                    &gt;
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Botón para actualizar el evento seleccionado -->
+            <button class="btn btn-primary my-5" [disabled]="events[currentIndex]?.idEvento === null"
+              (click)="updateEvent(events[currentIndex]?.idEvento)">
+              Atender Emergencia
+            </button>
+          </div>
+        }@else if ((inProgessEvent) || ((adoptanteProcess || orgProcess) && !(userAdoptante && userOrganizacion))){
+          @if (this.userRol === "organizacion" && inProgessEvent) {
+            <div class="card popAlert align-items-center shadow text-center">
+              <img src="../../assets/images/login-signup/adopta.svg" class="imgLogo" alt="...">
+              <div class="card-body">
+                <h4 class="card-title">👀 Detalles Emergencia 👀</h4>
+                <p class="card-text">Usuario Reportante: {{ eventDetail?.userReportante }}</p>
+                <p class="card-text">Tipo de emergencia: {{ events[currentIndex]?.tipoEvento }}</p>
+                <p class="card-text">Debes comunicarte con el usuario via wsp</p>
+                <p>Presiona la Alerta para ver una ruta en Google Maps</p>
+                <a class="btn btn-secondary mx-3" *ngIf="telefono" [href]="'https://wa.me/+56' + telefono" target="_blank"
+                  (click)="enableButton()">Enviar WhatsApp</a>
+                <button class="btn btn-primary my-5 mx-3" [disabled]="!isButtonEnabled"
+                  (click)="buttonActionContinue()">Generar
+                  Reporte</button>
+              </div>
+            </div>
+          }@else if (this.userRol === "adoptante" && adoptanteProcess) {
+            <div class="card popAlert align-items-center shadow text-center ">
+              <img src="../../assets/images/login-signup/adopta.svg" class="imgLogo" alt="...">
+              <div class="card-body">
+                <h2 class="card-title">🐾 Emergencia Recibida 🐾</h2>
+                <p class="card-text">tipo de emergencia: {{ eventDetail?.tipoEvento }}</p>
+                <p class="card-text">Te atendera {{ userResponsable }} de la sucursal {{ sucursalResponsable }}</p>
+                <p class="card-text">Espera a que nuestro/a colaborador/a se ponga en contacto contigo por WhatsApp...</p>
+                <button class="btn btn-secondary" (click)="refreshPage()">Ya se contactáron conmigo 👍</button>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+  </div>
+</div>

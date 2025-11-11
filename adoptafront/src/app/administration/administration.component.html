@@ -1,0 +1,382 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-1">
+      <app-navsty></app-navsty>
+    </div>
+    <div class="col-lg-11 col-sm-12">
+      <div class="container glass mt-5 mb-5">
+        <div class="header">
+          <h1>Organizaciones</h1>
+        </div>
+        <div class="search-section">
+          <div class="search-box mx-auto">
+            <label for="searchOrganization" class="mx-1">Nombre organización: </label>
+            <input type="text" id="searchOrganization" [(ngModel)]="searchOrganization" class="form-control mr-2"
+              placeholder="Buscar organización">
+            <button class="btn btn-primary new-button" (click)="search()">Buscar</button>
+          </div>
+          <button class="btn btn-primary new-button-2" (click)="openOrgModal()">+ Nueva organización</button>
+        </div>
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nombre Organización</th>
+                <th>RUT Empresa</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let organization of filteredOrganizations">
+                <td>{{ organization.nombre_organizacion }}</td>
+                <td>{{ organization.rut_empresa }}</td>
+                <td class="actions">
+                  <button class="btn btn-primary color-2" (click)="openOrgEditModal(organization.id)">
+                    <i class="fas fa-pencil-alt"></i>
+                  </button>
+                  <button class="btn btn-danger color-3" (click)="deleteOrganization(organization.id)">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                  <button class="btn btn-secondary color" (click)="viewSucursales(organization.id)">
+                    <i class="fas fa-home"></i> Ver sucursales
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Registro Org -->
+<div id="myModalOrg" class="modal" [ngClass]="{'show': isOrgModalOpen}"
+  [ngStyle]="{'display': isOrgModalOpen ? 'block' : 'none'}">
+  <div class="modal-content">
+    <span class="close" (click)="closeOrgModal()">&times;</span>
+    <div class="mb-4 mt-2">
+      <h2>REGISTRO ORGANIZACIÓN</h2>
+    </div>
+    <form [formGroup]="signupOrgForm" (ngSubmit)="onSubmitNewOrg()">
+      <!-- Nombre organización -->
+      <div class="mb-3 input-container">
+        <label for="nombre_organizacion">Nombre organización:</label>
+        <input type="text" id="nombre_organizacion" formControlName="nombre_organizacion"
+          placeholder="Ingresa el nombre" class="form-control">
+        @if (signupOrgForm.get('nombre_organizacion')?.touched &&
+        signupOrgForm.get('nombre_organizacion')?.invalid) {
+        <div class="text-danger">
+          {{ getNameOrgMessage() }}
+        </div>
+        }
+      </div>
+      <!-- RUT -->
+      <div class="mb-3 input-container">
+        <label for="rut_empresa">RUT:</label>
+        <input type="text" id="rut_empresa" formControlName="rut_empresa" (input)="formatRutOrg($event)"
+          placeholder="Ingresa el RUT" class="form-control">
+        @if (signupOrgForm.get('rut_empresa')?.touched && signupOrgForm.get('rut_empresa')?.invalid) {
+        <div class="text-danger">
+          {{ getRutOrgMessage() }}
+        </div>
+        }
+      </div>
+      <!-- Botón registrarse -->
+      <div class="button-container mb-4">
+        <button type="submit" class="btn-1 mb-3">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Edición Org -->
+<div id="myModalOrgEdit" class="modal" [ngClass]="{'show': isOrgEditModalOpen}"
+  [ngStyle]="{'display': isOrgEditModalOpen ? 'block' : 'none'}">
+  <div class="modal-content">
+    <!-- Botón para cerrar el modal -->
+    <span class="close" (click)="closeOrgEditModal()">&times;</span>
+    <div class="mb-4 mt-2">
+      <h2>EDITAR ORGANIZACIÓN</h2>
+    </div>
+    <!-- Formulario de edición de organización -->
+    <form [formGroup]="modOrgForm" (ngSubmit)="onSubmitModOrg()">
+      <!-- Nombre organización -->
+      <div class="mb-3 input-container">
+        <label for="nombre_organizacion">Nombre organización:</label>
+        <input type="text" id="nombre_organizacion" formControlName="nombre_organizacion"
+          placeholder="Ingresa el nombre" class="form-control">
+        <!-- Mensaje de error -->
+        @if (modOrgForm.get('nombre_organizacion')?.touched && modOrgForm.get('nombre_organizacion')?.invalid) {
+        <div class="text-danger">
+          {{ getNameOrgMessage() }}
+        </div>
+        }
+      </div>
+      <!-- Botón guardar cambios -->
+      <div class="button-container mb-4">
+        <button type="submit" class="btn-1 mb-3">Guardar cambios</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!----------SUCURSAL---------->
+<!-- Modal Ver Sucursales -->
+<div id="myModalSucursales" class="modal" [ngClass]="{'show': isSucursalesModalOpen}"
+  [ngStyle]="{'display': isSucursalesModalOpen ? 'block' : 'none'}">
+  <div class="modal-content">
+    <span class="close" (click)="closeSucursalesModal()">&times;</span>
+    <div class="modal-header">
+      <h2>SUCURSALES</h2>
+    </div>
+    <div class="modal-body">
+      <button class="btn btn-primary new-button-2 mt-2 mb-3" (click)="openSucursalModal()">+ Agregar sucursal</button>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nombre sucursal</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sucursal of sucursales">
+              <td>{{ sucursal.nombre_sucursal }}</td>
+              <td class="actions">
+                <button class="btn btn-danger color" (click)="viewSucursalDetails(sucursal.id)">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button class="btn btn-primary color-2" (click)="openSucursalEditModal(sucursal.id)">
+                  <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button class="btn btn-danger color-3" (click)="deleteSucursal(sucursal.id)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+                <br>
+                <button class="btn btn-secondary color mt-2" (click)="prepareAddUser(sucursal.id)">
+                  <i class="fas fa-plus"></i> Usuario
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Registro Sucursal -->
+<div id="myModalSucursal" class="modal" [ngClass]="{'show': isSucursalModalOpen}"
+  [ngStyle]="{'display': isSucursalModalOpen ? 'block' : 'none'}">
+  <div class="modal-content">
+    <span class="close" (click)="closeSucModal()">&times;</span>
+    <div class="modal-header">
+      <h2>REGISTRO SUCURSAL</h2>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="signupSucursalForm" (ngSubmit)="onSubmitNewSucursal()">
+        <!-- Nombre sucursal -->
+        <div class="mb-3 input-container">
+          <label for="nombre_sucursal">Nombre sucursal:</label>
+          <input type="text" id="nombre_sucursal" formControlName="nombre_sucursal" placeholder="Ingresa el nombre"
+            class="form-control">
+          @if (signupSucursalForm.get('nombre_sucursal')?.touched && signupSucursalForm.get('nombre_sucursal')?.invalid)
+          {
+          <div class="text-danger">
+            {{ getNameSucursalMessage() }}
+          </div>
+          }
+        </div>
+        <!-- Región -->
+        <div class="mb-3 input-container">
+          <label for="region">Región:</label>
+          <select id="region" formControlName="region" class="form-control" (change)="onRegionChange($event)">
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option *ngFor="let region of regions" [value]="region.id">{{ region.nombre }}</option>
+          </select>
+          @if (signupSucursalForm.get('region')?.touched && signupSucursalForm.get('region')?.invalid)
+          {
+          <div class="text-danger">
+            {{ getRegionOrgMessage() }}
+          </div>
+          }
+        </div>
+        <!-- Comuna -->
+        <div class="mb-3 input-container">
+          <label for="comuna">Comuna:</label>
+          <select id="comuna" formControlName="comuna" class="form-control">
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option *ngFor="let commune of communes" [value]="commune.id">{{ commune.nombre }}</option>
+          </select>
+          @if (signupSucursalForm.get('comuna')?.touched && signupSucursalForm.get('comuna')?.invalid)
+          {
+          <div class="text-danger">
+            {{ getCommuneOrgMessage() }}
+          </div>
+          }
+        </div>
+        <!-- Dirección organización -->
+        <div class="mb-3 input-container">
+          <label for="direccion">Dirección:</label>
+          <input type="text" id="direccion" formControlName="direccion" placeholder="Ingresa una dirección"
+            class="form-control">
+          @if (signupSucursalForm.get('direccion')?.touched && signupSucursalForm.get('direccion')?.invalid)
+          {
+          <div class="text-danger">
+            {{ getAddressOrgMessage() }}
+          </div>
+          }
+        </div>
+        <!-- Botón registrarse -->
+        <div class="button-container mb-4">
+          <button type="submit" class="btn-1 mb-3">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Edición Sucursal -->
+<div id="myModalSucursalEdit" class="modal" [ngClass]="{'show': isSucursalEditModalOpen}"
+  [ngStyle]="{'display': isSucursalEditModalOpen ? 'block' : 'none'}">
+  <div class="modal-content">
+    <span class="close" (click)="closeSucursalEditModal()">&times;</span>
+    <div class="mb-4 mt-2">
+      <h2>EDITAR SUCURSAL</h2>
+    </div>
+    <form [formGroup]="modSucursalForm" (ngSubmit)="onSubmitModSucursal()">
+      <!-- Nombre sucursal -->
+      <div class="mb-3 input-container">
+        <label for="nombre_sucursal">Nombre sucursal:</label>
+        <input type="text" id="nombre_sucursal" formControlName="nombre_sucursal" placeholder="Ingresa el nombre"
+          class="form-control">
+          @if (modSucursalForm.get('nombre_sucursal')?.touched && modSucursalForm.get('nombre_sucursal')?.invalid)
+          {
+          <div class="text-danger">
+            {{ getNameSucursalMessage() }}
+          </div>
+        }
+      </div>
+      <!-- Región -->
+      <div class="mb-3 input-container">
+        <label for="region">Región:</label>
+        <select id="region" formControlName="region" class="form-control" (change)="onRegionChange($event)">
+          <option value="" disabled selected>Selecciona una opción</option>
+          <option *ngFor="let region of regions" [value]="region.id">{{ region.nombre }}</option>
+        </select>
+        @if (modSucursalForm.get('region')?.touched && modSucursalForm.get('region')?.invalid)
+        {
+        <div class="text-danger">
+          {{ getRegionOrgMessage() }}
+        </div>
+      }
+      </div>
+      <!-- Comuna -->
+      <div class="mb-3 input-container">
+        <label for="comuna">Comuna:</label>
+        <select id="comuna" formControlName="comuna" class="form-control">
+          <option value="" disabled selected>Selecciona una opción</option>
+          <option *ngFor="let commune of communes" [value]="commune.id">{{ commune.nombre }}</option>
+        </select>
+        @if (modSucursalForm.get('comuna')?.touched && modSucursalForm.get('comuna')?.invalid)
+        {
+        <div class="text-danger">
+          {{ getCommuneOrgMessage() }}
+        </div>
+      }
+      </div>
+      <!-- Dirección organización -->
+      <div class="mb-3 input-container">
+        <label for="direccion">Dirección:</label>
+        <input type="text" id="direccion" formControlName="direccion" placeholder="Ingresa una dirección"
+          class="form-control">
+          @if (modSucursalForm.get('direccion')?.touched && modSucursalForm.get('direccion')?.invalid)
+          {
+          <div class="text-danger">
+            {{ getAddressOrgMessage() }}
+          </div>
+        }
+      </div>
+      <!-- Botón guardar -->
+      <div class="button-container mb-4">
+        <button type="submit" class="btn-1 mb-3">Guardar cambios</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!---------- Modal Registro Usuario ---------->
+<div id="myModal" class="modal" [ngClass]="{'show': isModalOpen}"
+  [ngStyle]="{'display': isModalOpen ? 'block' : 'none'}">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>AGREGAR USUARIO</h2>
+    <form [formGroup]="userOrg" (ngSubmit)="addUserToOrganization()">
+      <div class="form-column">
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" formControlName="email" class="form-control" placeholder="adopta.me@gmail.com">
+          @if (userOrg.get('email')?.touched && userOrg.get('email')?.invalid) {
+          <div class="text-danger">
+            {{ getEmailMessage() }}
+          </div>
+          }
+        </div>
+      </div>
+      <!-- Botón agregar usuario -->
+      <div class="button-container mb-4">
+        <button type="submit" class="btn-1 btn-primary mb-3 save">Invitar a sucursal</button>
+      </div>
+    </form>
+    <h3>Usuarios</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Rut</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.name }}</td>
+          <td>{{ user.rut }}</td>
+          <td>
+            <button class="btn btn-danger" (click)="deleteUser(user.userOrganizacionId)">
+              <i class="fas fa-trash-alt"></i> Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!---------- Modal Detalle Sucursal ---------->
+<div id="myModalSucursalDetail" class="modal" [ngClass]="{'show': isSucursalDetailModalOpen}"
+  [ngStyle]="{'display': isSucursalDetailModalOpen ? 'block' : 'none'}">
+  <div class="modal-content">
+    <span class="close" (click)="closeSucursalDetailModal()">&times;</span>
+    <div class="modal-header">
+      <h2>DETALLES DE LA SUCURSAL</h2>
+    </div>
+    <div class="modal-body">
+      <div *ngIf="sucursalDetails">
+        <div>
+          <label for="">Nombre sucursal: {{ sucursalDetails.nombre_sucursal  }}</label>
+        </div>
+        <div>
+          <label for="">Región: {{ sucursalDetails.regionNombre  }}</label>
+        </div>
+        <div>
+          <label for="">Comuna: {{ sucursalDetails.comunaNombre }}</label>
+        </div>
+        <div>
+          <label for="">Dirección: {{ sucursalDetails.direccion  }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

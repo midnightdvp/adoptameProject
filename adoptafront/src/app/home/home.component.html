@@ -1,0 +1,136 @@
+<!-- Header -->
+<header class="animals-background">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <img src="../../assets/images/login-signup/adopta.svg" alt="Logo" class="img-fluid-nav">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ms-auto d-block d-lg-flex text-center">
+          <button class="btn btn-success btn-lg" (click)="openModalIn()">Iniciar sesión</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-5 p-5 mb-5 mt-5">
+        <h1>¡Adopta.Me! </h1>
+        <p class="weight">Cada mascota merece un hogar lleno de amor y cuidado. En lugar de comprar, considera
+          la
+          adopción. Miles de amigos peludos esperan ansiosamente en refugios y organizaciones de rescate, listos
+          para
+          ser parte de tu familia.</p>
+        <p class="weight">Elige adoptar y marca la diferencia en dos vidas. ¡Haz clic abajo para empezar!
+          Únete a la comunidad de adoptantes y rescata a un amigo peludo hoy mismo. Cada adopción es un paso
+          hacia un mundo mejor, lleno de amor y compañerismo. ¡Haz la diferencia y adopta con nosotros!</p>
+        <div class="button-container">
+          <button class="btn btn-success btn-lg mt-3" (click)="openModalUp()">¡Registrate ahora!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Modal Login-->
+<div id="openModalIn" class="modal" [ngClass]="{'show': showModalIn}"
+[ngStyle]="{'display': showModalIn ? 'block' : 'none'}" class="custom-modal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModalIn()">&times;</span>
+    <h1>Iniciar sesión</h1>
+    <p>Actualmente puedes iniciarte con google.</p>
+    <button class="btn btn-success btn-lg mt-3" (click)="validateGoogle()">
+      <img src="../../assets/images/home/google.svg" alt="Logo de Google" class="img-google">
+      Iniciar con Google
+    </button>
+  </div>
+</div>
+<!-- Modal Sign up-->
+<div id="openModalUp" class="modal" [ngClass]="{'show': showModalUp}"
+[ngStyle]="{'display': showModalUp ? 'block' : 'none'}" class="custom-modal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModalUp()">&times;</span>
+    <h1>Registrate</h1>
+    <p>Actualmente puedes registrarte con google.</p>
+    <button class="btn btn-success btn-lg mt-3" (click)="validateGoogle()">
+      <img src="../../assets/images/home/google.svg" alt="Logo de Google" class="img-google">
+      Registrate con Google
+    </button>
+  </div>
+</div>
+<div class="container">
+  <section>
+    <!-- Contenido principal -->
+    <div class="container-fluid">
+      <div class="row align-items-center mt-5">
+        <div class="col-md-3">
+          <img src="../../assets/images/home/gif-cora.gif" alt="" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+          <h1>¡Adoptar es...</h1>
+          <p>Adoptar no solo cambia la vida de la mascota que llevas a casa, sino que también transforma la tuya. A
+            través de la adopción, no solo le das una segunda oportunidad a un animal necesitado, sino que también
+            experimentas el amor y la gratitud que solo un amigo peludo puede ofrecer. Cada día con tu mascota
+            estará lleno de momentos especiales y recuerdos inolvidables.
+          </p>
+        </div>
+        <div class="col-md-3">
+          <img src="../../assets/images/home/git-conejo.gif" alt="" class="img-fluid">
+        </div>
+      </div>
+      <div class="row align-items-center background-alt">
+        <div class="col-md-3">
+          <img src="../../assets/images/home/gif-cora.gif" alt="" class="img-fluid">
+        </div>
+        <div class="col-md-3">
+          <img src="../../assets/images/home/gif-perro.gif" alt="" class="img-fluid">
+        </div>
+        <div class="col-md-6 mt-4 mb-3">
+          <h1>Amar Doblemente!</h1>
+          <p>
+            Experimenta la gratitud y la alegría incondicional que solo un amigo peludo te puede entregar.
+            Juntos,
+            podemos hacer del mundo un lugar mejor para ellos. Adoptar no solo es un acto de amor, sino también de
+            responsabilidad y compromiso. Cada mascota adoptada es una vida salvada y un hogar transformado.</p>
+        </div>
+      </div>
+
+      <div class="row align-items-center">
+        <div class="col-md-3 mt-3">
+          <img src="../../assets/images/home/gif-idea.gif" alt="" class="img-fluid">
+        </div>
+        <div class="col-md-6 mt-3">
+          <h1>¿De dónde nace la idea?</h1>
+          <p>
+            Nuestra aplicación de adopción de mascotas surge de la necesidad de crear un espacio exclusivo para la
+            adopción. Inspirados por el amor hacia los animales, estudiantes se unieron para conectar adoptantes con
+            organizaciones de rescate. Buscamos facilitar la adopción responsable, ofreciendo una experiencia
+            intuitiva y
+            segura.</p>
+        </div>
+        <div class="col-md-3">
+          <img src="../../assets/images/home/gif-like.gif" alt="" class="img-fluid">
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-light py-3">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-9">
+        <h5>Contacto con Organizaciones</h5>
+        <p>Con Adopta.Me, tendrás la posibilidad de comunicarte con diversas organizaciones a través de email
+          para
+          obtener más detalles sobre la adopción de mascotas.
+        </p>
+        <p>&copy; 2024 Adopta.Me. Todos los derechos reservados.</p>
+      </div>
+      <div class="col-md-3">
+        <img src="../../assets/images/home/gif-like.gif" alt="" class="img-fluid">
+      </div>
+    </div>
+  </div>
+</footer>

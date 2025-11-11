@@ -1,0 +1,161 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Barra de navegación lateral -->
+    <!-- agregar nueva pagina coincidence -->
+    <div class="col-12 navsty shadow-lg">
+      <div class="d-flex align-items-center centy">
+        <div class="nav flex-column nav-pills me-3 " id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          @if(admin){
+          <!-- Adoptar -->
+          <button class="nav-link my-5" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home"
+            type="button" role="tab" aria-controls="v-pills-home" aria-selected="true"
+            (click)="navigateToURL('/adoption')"><img src="../../assets/images/home/icons8-huella-de-gato-50.png" alt=""
+              class="sizeIMG">
+            <p class="navName">Adoptar</p>
+          </button>
+          }
+          @if (adoptante) {
+          <!-- Coincidencias -->
+          <button class="nav-link my-4" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home"
+            type="button" role="tab" aria-controls="v-pills-home" aria-selected="true"
+            (click)="navigateToURL('/coincidence')"><img
+              src="../../assets/images/home/icons8-cuidadores-de-gatos-100.png" alt="" class="sizeIMG">
+            <p class="navName">Coincidencias</p>
+          </button>
+          <!-- Adoptar -->
+          <button class="nav-link my-4" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home"
+            type="button" role="tab" aria-controls="v-pills-home" aria-selected="true"
+            (click)="navigateToURL('/catalogo-mascotas')"><img src="../../assets/images/home/icons8-huella-de-gato-50.png" alt=""
+              class="sizeIMG">
+            <p class="navName">Adoptar</p>
+          </button>
+          <!-- Oraculo -->
+          <button class="nav-link my-4" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home"
+            type="button" role="tab" aria-controls="v-pills-home" aria-selected="true"
+            (click)="navigateToURL('/adoption')"><img src="../../assets/images/home/icons8-fortune-teller-96.png" alt=""
+              class="sizeIMG">
+            <p class="navName">Oraculo</p>
+          </button>
+          <!-- Mapa -->
+          <button class="nav-link my-4" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile"
+            type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false"
+            (click)="navigateToURL('/map')"><img src="../../assets/images/home/pet-map.png" alt="" class="sizeIMG">
+            <p class="navName">Mapa</p>
+          </button>
+          <!-- Perfil -->
+          <button class="nav-link my-4" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile"
+            type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false"
+            (click)="navigateToURL('/account')"><img src="../../assets/images/home/profile.png" alt="" class="sizeIMG">
+            <p class="navName">Perfil</p>
+          </button>
+          }@else if(admin){
+          <!-- Administrar -->
+          <button class="nav-link my-5" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home"
+            type="button" role="tab" aria-controls="v-pills-home" aria-selected="true"
+            (click)="navigateToURL('/administration')"><img
+              src="../../assets/images/home/icons8-administrador-del-sistema-femenino-48.png" alt="" class="sizeIMG">
+            <p class="navName">Admin</p>
+          </button>
+          <!-- Mapa -->
+          <button class="nav-link my-5" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile"
+            type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false"
+            (click)="navigateToURL('/map')"><img src="../../assets/images/home/pet-map.png" alt="" class="sizeIMG">
+            <p class="navName">Mapa</p>
+          </button>
+          <!-- Perfil -->
+          <button class="nav-link my-5" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile"
+            type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false"
+            (click)="navigateToURL('/account')"><img src="../../assets/images/home/profile.png" alt="" class="sizeIMG">
+            <p class="navName">Perfil</p>
+          </button>
+          }@else if (organizacion) {
+          <!-- Coincidencias -->
+          <button class="nav-link my-2" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home"
+            type="button" role="tab" aria-controls="v-pills-home" aria-selected="true"
+            (click)="navigateToURL('/coincidence')"><img
+              src="../../assets/images/home/icons8-cuidadores-de-gatos-100.png" alt="" class="sizeIMG">
+            <p class="navName">Coincidencias</p>
+          </button>
+          <!-- Adoptar -->
+          <button class="nav-link my-2" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home"
+            type="button" role="tab" aria-controls="v-pills-home" aria-selected="true"
+            (click)="navigateToURL('/catalogo-mascotas')"><img src="../../assets/images/home/icons8-huella-de-gato-50.png" alt=""
+              class="sizeIMG">
+            <p class="navName">Adoptar</p>
+          </button>
+          <!-- Oraculo -->
+          <button class="nav-link my-2" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home"
+            type="button" role="tab" aria-controls="v-pills-home" aria-selected="true"
+            (click)="navigateToURL('/adoption')"><img src="../../assets/images/home/icons8-fortune-teller-96.png" alt=""
+              class="sizeIMG">
+            <p class="navName">Oraculo</p>
+          </button>
+          <!-- Administrar -->
+          <button class="nav-link my-2" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home"
+            type="button" role="tab" aria-controls="v-pills-home" aria-selected="true"
+            (click)="navigateToURL('/landing-organization')"><img src="../../assets/images/home/pet-home.png" alt=""
+              class="sizeIMG">
+            <p class="navName">Inicio</p>
+          </button>
+          <!-- Mascotas -->
+          <button class="nav-link my-2" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home"
+            type="button" role="tab" aria-controls="v-pills-home" aria-selected="true"
+            (click)="navigateToURL('/admin-pet')"><img src="../../assets/images/home/icons8-pet-care-96.png" alt=""
+              class="sizeIMG">
+            <p class="navName">Mascotas</p>
+          </button>
+          <!-- Mapa -->
+          <button class="nav-link my-2" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile"
+            type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false"
+            (click)="navigateToURL('/map')"><img src="../../assets/images/home/pet-map.png" alt="" class="sizeIMG">
+            <p class="navName">Mapa</p>
+          </button>
+          <!-- Perfil -->
+          <button class="nav-link my-2" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile"
+            type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false"
+            (click)="navigateToURL('/account')"><img src="../../assets/images/home/profile.png" alt="" class="sizeIMG">
+            <p class="navName">Perfil</p>
+          </button>
+          }                    
+        </div>
+      </div>
+    </div>
+    <!-- Barra de navegación horizontal -->
+    <div class="col-12">
+      <div class="navsty-horizontal fixed-bottom container-fluid bg-primary">
+        <div class="row">
+          <div class="col centy">
+            <button class="nav-link" (click)="navigateToURL('/coincidence')">
+              <img src="../../assets/images/home/icons8-cuidadores-de-gatos-100.png" alt="" class="sizeIMG">
+              <p class="navName">Coincidencias</p>
+            </button>
+          </div>
+          <div class="col centy">
+            <button class="nav-link" (click)="navigateToURL('/catalogo-mascotas')">
+              <img src="../../assets/images/home/icons8-huella-de-gato-50.png" alt="" class="sizeIMG">
+              <p class="navName">Adoptar</p>
+            </button>
+          </div>
+          <div class="col centy">
+            <button class="nav-link" (click)="navigateToURL('/adoption')">
+              <img src="../../assets/images/home/icons8-fortune-teller-96.png" alt="" class="sizeIMG">
+              <p class="navName">Oraculo</p>
+            </button>
+          </div>
+          <div class="col centy">
+            <button class="nav-link" (click)="navigateToURL('/map')">
+              <img src="../../assets/images/home/pet-map.png" alt="" class="sizeIMG">
+              <p class="navName">Mapa</p>
+            </button>
+          </div>
+          <div class="col centy">
+            <button class="nav-link" (click)="navigateToURL('/account')">
+              <img src="../../assets/images/home/profile.png" alt="" class="sizeIMG">
+              <p class="navName">Perfil</p>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

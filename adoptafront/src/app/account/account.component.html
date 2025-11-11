@@ -1,0 +1,112 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-1">
+      <app-navsty></app-navsty>
+    </div>
+    <div class="col-lg-11 col-sm-12">
+      <div class="container-fluid">
+        <div class="row row-p">
+          <!-- Perfil -->
+          <div class="col-md-5 profile-section">
+            <h2>Perfil</h2>
+            <div class="profile-content">
+              <form [formGroup]="profileForm" (ngSubmit)="saveUserProfile()">
+                <div class="row mb-3">
+                  <div class="col-12 d-flex align-items-center justify-content-center img-container">
+                    <div class="img-preview-container">
+                      <img *ngIf="profileImageUrl; else placeholder" [src]="profileImageUrl"
+                        alt="Vista previa de la foto de perfil" class="imagen img-fluid rounded-circle mb-2 me-3">
+                      <ng-template #placeholder>
+                        <img src="../../assets/images/login-signup/user.webp" alt="Placeholder"
+                          class="imagen img-fluid rounded-circle mb-2 me-3">
+                      </ng-template>
+                    </div>
+                    <button type="button" class="btn btn-primary b" (click)="fileInput.click()">
+                      <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none;"
+                      accept="image/*">
+                  </div>
+                  @if (profileForm.get('profileImage')?.touched && profileForm.get('profileImage')?.invalid) {
+                    <div class="text-danger">
+                      {{ getPhotoMessage() }}
+                    </div>
+                    }
+                </div>
+                <!-- Editar nombre completo -->
+                <div class="form-group mb-3">
+                  <label for="nombreApellido">Nombre completo</label>
+                  <input type="text" class="form-control" id="nombreApellido" formControlName="nombreApellido" required>
+                  @if (profileForm.get('nombreApellido')?.touched && profileForm.get('nombreApellido')?.invalid) {
+                    <div class="text-danger">
+                      {{ getNombreApellidoMessage() }}
+                    </div>
+                    }
+                </div>
+                <!-- Teléfono -->
+                <div class="mb-3 input-container">
+                  <label for="telefono">Teléfono:</label>
+                  <input type="text" id="telefono" formControlName="telefono" placeholder="Ingresa tu teléfono"
+                    class="form-control" (input)="formatPhone($event)">
+                  @if (profileForm.get('telefono')?.touched && profileForm.get('telefono')?.invalid) {
+                  <div class="text-danger">
+                    {{ getTelefonoMessage() }}
+                  </div>
+                  }
+                </div>
+                <!-- Editar región -->
+                <div class="form-group mb-3">
+                  <label for="region">Región</label>
+                  <select id="region" formControlName="region_id" class="form-control" (change)="onRegionChange($event)"
+                    required>
+                    <option value="" disabled selected>Selecciona una región</option>
+                    <option *ngFor="let region of regions" [value]="region.id">{{ region.nombre }}</option>
+                  </select>
+                  @if (profileForm.get('region_id')?.touched && profileForm.get('region_id')?.invalid) {
+                    <div class="text-danger">
+                      {{ getRegionMessage() }}
+                    </div>
+                    }
+                </div>
+                <!-- Editar comuna -->
+                <div class="form-group mb-3">
+                  <label for="commune">Comuna</label>
+                  <select id="commune" formControlName="commune" class="form-control" required>
+                    <option value="" disabled selected>Selecciona una comuna</option>
+                    <option *ngFor="let commune of communes" [value]="commune.id">{{ commune.nombre }}</option>
+                  </select>
+                  @if (profileForm.get('commune')?.touched && profileForm.get('commune')?.invalid) {
+                    <div class="text-danger">
+                      {{ getComunaMessage() }}
+                    </div>
+                    }
+                </div>
+                <!-- Editar dirección -->
+                <div class="form-group mb-3">
+                  <label for="direccion">Dirección</label>
+                  <input type="text" class="form-control" id="direccion" formControlName="direccion" required>
+                  @if (profileForm.get('direccion')?.touched && profileForm.get('direccion')?.invalid) {
+                    <div class="text-danger">
+                      {{ getDireccionMessage() }}
+                    </div>
+                    }
+                </div>
+                <!-- Botón guardar cambios -->
+                <div class="form-group mb-3">
+                  <button type="submit" class="btn btn-primary btn-1">Guardar cambios</button>
+                </div>
+              </form>
+              <!-- Botón para cerrar sesión -->
+              <div class="row mb-3">
+                <div class="col-12">
+                  <button type="button" class="btn btn-primary btn-1" (click)="logout()">Cerrar sesión</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

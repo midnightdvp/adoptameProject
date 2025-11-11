@@ -1,0 +1,62 @@
+<!-- coincidence.component.html -->
+<div class="container mt-4">
+  <div class="col-1">
+    <app-navsty></app-navsty>
+  </div>
+  <div class="row mb-5">
+    <div class="col-12">
+      <h1 class="shadow">Mascotas</h1>
+    </div>
+    <!-- Mostrar mensaje si no hay coincidencias -->
+    <div class="col-12" *ngIf="(coincSubject | async)?.length === 0">
+      <p>No se encontraron coincidencias.</p>
+    </div>
+    <div class="col-md-4 col-sm-6 mb-4" *ngFor="let coincidence of coincidences">
+      <div class="card">
+        <div class="card-body card-color">
+          <img [src]="coincidence.mascota.imagen" class="card-img-top" alt="">
+          @if (coincidence.mascota.especie_id === 1) {
+            <!-- especie perro -->
+            <img src="../../assets/images/home/perro.jpg" alt="Placeholder" class="imagen img-fluid">
+          } @else if (coincidence.mascota.especie_id === 2) {
+            <!-- especie gato -->
+            <img src="../../assets/images/home/gato.png" alt="Placeholder" class="imagen img-fluid">
+          }
+          <h2 class="card-title">{{coincidence.mascota.nombre}}</h2>
+          <p class="card-text">
+            <strong>Estado:</strong> {{coincidence.mascota.estado}}
+          </p>
+          <button class="btn btn-primary" (click)="openModal(coincidence.mascota)">Ver más</button>
+          @if (coincidence.mascota.estado != 'Adoptado') {
+          <button class="btn btn-danger" (click)="deleteCoincidence(coincidence.mascota.id, coincidence.id)">Eliminar
+            Coincidencia</button>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="openModalIn" class="modal" [ngClass]="{'show': showMascota}"
+  [ngStyle]="{'display': showMascota ? 'block' : 'none'}" class="custom-modal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <div class="modal-body">
+      <h2 class="modal-title">{{selectedMascota?.nombre}}</h2>
+      <p><strong class="modal-title">Microchip:</strong> {{selectedMascota?.microchip}}</p>
+      <p><strong>Fecha de Nacimiento:</strong> {{selectedMascota?.fecha_nacimiento}}</p>
+      <p><strong>Sexo:</strong> {{selectedMascota?.sexo}}</p>
+      <p><strong>Especie:</strong> {{selectedMascota?.nombreEspecie}}</p>
+      <p><strong>Raza:</strong> {{selectedMascota?.nombreRaza}}</p>
+      <p><strong>Color:</strong> {{selectedMascota?.color}}</p>
+      <p><strong>Patrón:</strong> {{selectedMascota?.patron}}</p>
+      <p><strong>Esterilizado:</strong> {{selectedMascota?.esterilizado ? 'Si' : 'No'}}</p>
+      <p><strong>Sociable:</strong> {{selectedMascota?.sociable ? 'Si' : 'No'}}</p>
+      <p><strong>Tratamiento:</strong> {{selectedMascota?.tratamiento ? 'Si' : 'No'}}</p>
+      <p><strong>Descripción del Tratamiento:</strong> {{selectedMascota?.tratamientoDescripcion}}</p>
+      <p><strong>Vacunas:</strong> {{selectedMascota?.vacunas ? 'Si' : 'No'}}</p>
+      <p><strong>Descripción:</strong> {{selectedMascota?.descripcion}}</p>
+    </div>
+  </div>
+</div>

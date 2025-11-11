@@ -1,0 +1,291 @@
+<div class="container">
+  <div class="row">
+    <div class="col-1">
+      <app-navsty></app-navsty>
+    </div>
+    <div class="col-lg-12 col-sm-12">
+      <div class="row justify-content-center">
+        <!------------------------------------------------------Oraculo------------------------------------------------------->
+        @if (!displayMatchs && !questReady){
+        <div class="card text-center">
+          <div class="card-header mb-5 shadow-lg">
+            <img class="img-fluid" src="../../assets/images/login-signup/adopta.png" alt="">
+          </div>
+          <div class="d-flex justify-content-start backBtn shadow-lg">
+            <button class="btn btn-outline-light" (click)="back()">
+              <img class="isBtn" src="../../assets/images/home/icons8-atrás-96.png" alt="Just No...">
+            </button>
+          </div>
+          <div class="card-body">
+            <h2 class="card-title mt-5">Oraculo de Mascotas</h2>
+            <!-- Texto de Interaccion -->
+            <div class="card-test">
+              <p id="typedtext" class="card-text2 animate"></p>
+            </div>
+          </div>
+          <div class="card-body">
+            <!-- Botones interactivos -->
+            <div class="row btn-cont" #divNorStyle>
+              @if ((!isGato && !isPerro && !noRelevanteEspecie && !noRelevanteSexo && !isMacho && !isHembra)) {
+              <div class="col-4  shadow-lg">
+                <button href="" class="btn btn-outline-light" (click)="perroOPT(true)">Perro</button>
+              </div>
+              <div class="col-4 shadow-lg">
+                <button href="" class="btn btn-outline-light btn-nor" (click)="noRelevanteEspecieOPT(true)">No
+                  relevante</button>
+              </div>
+              <div class="col-4 shadow-lg">
+                <button href="" class="btn btn-outline-light" (click)="gatoOPT(true)">Gato</button>
+              </div>
+              }@else if ((isPerro || isGato || noRelevanteEspecie) && (!isMacho && !isHembra && !noRelevanteSexo)) {
+              <div class="col-4 shadow-lg">
+                <button href="" class="btn btn-outline-light" (click)="machoOPT(true)">Macho</button>
+              </div>
+              <div class="col-4 shadow-lg">
+                <button href="" class="btn btn-outline-light btn-nor" (click)="noRelevanteSexoOPT(true)">No
+                  relevante</button>
+              </div>
+              <div class="col-4 shadow-lg">
+                <button href="" class="btn btn-outline-light" (click)="hembraOPT(true)">Hembra</button>
+              </div>
+              }@else if ((isPerro || isGato || noRelevanteEspecie) && (isMacho || isHembra || noRelevanteSexo) && (!alta
+              && !media && !baja)) {
+              <div class="col-4 shadow-lg">
+                <button class="btn btn-outline-light"
+                  (click)="selectACT('Baja')">Baja</button><!-- from {1 a 3} to {4 a 5] -->
+              </div>
+              <div class="col-4 shadow-lg">
+                <button class="btn btn-outline-light"
+                  (click)="selectACT('Media')">Media</button><!-- from {6 a 9} to {10 a 13] -->
+              </div>
+              <div class="col-4 shadow-lg">
+                <button class="btn btn-outline-light"
+                  (click)="selectACT('Alta')">Alta</button><!-- from {14 a 17} to {18 a 20] -->
+              </div>
+              }@else if ((isPerro || isGato || noRelevanteEspecie) && (isMacho || isHembra || noRelevanteSexo) && (alta)
+              && (!edadOp) ) {
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Alta')"> de 1 año a 3
+                  años</button><!-- from {1 a 3} to {4 a 5] -->
+              </div>
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Media alta')">de 3 años a 5
+                  años</button><!-- from {6 a 9} to {10 a 13] -->
+              </div>
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Sub media')">de 5 años a 9
+                  años</button><!-- from {1 a 3} to {4 a 5] -->
+              </div>
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Media')">de 9 años a 13
+                  años</button><!-- from {6 a 9} to {10 a 13] -->
+              </div>
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Media baja')">de 13 años a 17
+                  años</button><!-- from {1 a 3} to {4 a 5] -->
+              </div>
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Baja')">de 17 años a 20
+                  años</button><!-- from {6 a 9} to {10 a 13] -->
+              </div>
+              }@else if ((isPerro || isGato || noRelevanteEspecie) && (isMacho || isHembra || noRelevanteSexo) && media
+              && (!edadOp)) {
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Alta')"> de 1 año a 3
+                  años</button><!-- from {1 a 3} to {4 a 5] -->
+              </div>
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Media alta')">de 3 años a 5
+                  años</button><!-- from {6 a 9} to {10 a 13] -->
+              </div>
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Sub media')">de 5 años a 9
+                  años</button><!-- from {1 a 3} to {4 a 5] -->
+              </div>
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Media')">de 9 años a 13
+                  años</button><!-- from {6 a 9} to {10 a 13] -->
+              </div>
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Media baja')">de 13 años a 17
+                  años</button><!-- from {1 a 3} to {4 a 5] -->
+              </div>
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Baja')">de 17 años a 20
+                  años</button><!-- from {6 a 9} to {10 a 13] -->
+              </div>
+              }@else if ((isPerro || isGato || noRelevanteEspecie) && (isMacho || isHembra || noRelevanteSexo) && baja
+              && (!edadOp)) {
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Alta')"> de 1 año a 3
+                  años</button><!-- from {1 a 3} to {4 a 5] -->
+              </div>
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Media alta')">de 3 años a 5
+                  años</button><!-- from {6 a 9} to {10 a 13] -->
+              </div>
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Sub media')">de 5 años a 9
+                  años</button><!-- from {1 a 3} to {4 a 5] -->
+              </div>
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Media')">de 9 años a 13
+                  años</button><!-- from {6 a 9} to {10 a 13] -->
+              </div>
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Media baja')">de 13 años a 17
+                  años</button><!-- from {1 a 3} to {4 a 5] -->
+              </div>
+              <div class="col-6 shadow-lg my-3">
+                <button class="btn btn-outline-light" (click)="selectRange('Rango Baja')">de 17 años a 20
+                  años</button><!-- from {6 a 9} to {10 a 13] -->
+              </div>
+              }@else if ((isPerro || isGato || noRelevanteEspecie) && (isMacho || isHembra || noRelevanteSexo) && (alta
+              || media || baja) && (edadOp) && !(siTratamiento || noTrataniento)) {
+              <div class="col-6 shadow-lg">
+                <button class="btn btn-outline-light" (click)="isTratamiento(true)">Sí, tengo el
+                  tiempo</button><!-- from {1 a 3} to {4 a 5] -->
+              </div>
+              <div class="col-6 shadow-lg">
+                <button class="btn btn-outline-light" (click)="isTratamientoNor(true)">No tengo el
+                  tiempo</button><!-- from {6 a 9} to {10 a 13] -->
+              </div>
+              }@else if ((isPerro || isGato || noRelevanteEspecie) && (isMacho || isHembra || noRelevanteSexo) && (alta
+              || media || baja) && (edadOp) && (siTratamiento || noTrataniento) && !(siSociable || noSociable) ) {
+              <div class="col-6 shadow-lg">
+                <button class="btn btn-outline-light" (click)="isSociable(true)">Sí, tengo más de
+                  una</button><!-- from {1 a 3} to {4 a 5] -->
+              </div>
+              <div class="col-6 shadow-lg">
+                <button class="btn btn-outline-light" (click)="isSociableNor(true)">No, no tengo
+                  más</button><!-- from {6 a 9} to {10 a 13] -->
+              </div>
+              }@else if((isPerro || isGato || noRelevanteEspecie) && (isMacho || isHembra || noRelevanteSexo) && (alta
+              || media || baja) && (edadOp) && (siTratamiento || noTrataniento) && (siSociable || noSociable) &&
+              !(siEsteril || noEsteril)) {
+              <div class="col-6 shadow-lg">
+                <button class="btn btn-outline-light" (click)="isEsteril(true)">Que esté
+                  esterilizada</button><!-- from {1 a 3} to {4 a 5] -->
+              </div>
+              <div class="col-6 shadow-lg">
+                <button class="btn btn-outline-light" (click)="isEsterilNor(true)">Que no esté
+                  esterilizada</button><!-- from {6 a 9} to {10 a 13] -->
+              </div>
+              }@else if ((isPerro || isGato || noRelevanteEspecie) && (isMacho || isHembra || noRelevanteSexo) && (alta
+              || media || baja) && (edadOp) && (siTratamiento || noTrataniento) && (siSociable || noSociable) &&
+              (siEsteril || noEsteril) && !(color)) {
+              @for (c of colors; track c) {
+              <div class="col-6 shadow-lg my-2 ">
+                <button class="btn btn-outline-light" (click)="thisColor(c)">{{ c
+                  }}</button><!-- from {6 a 9} to {10 a 13] -->
+              </div>
+              }
+              }@else if ((isPerro || isGato || noRelevanteEspecie) && (isMacho || isHembra || noRelevanteSexo) && (alta
+              || media || baja) && (edadOp) && (siTratamiento || noTrataniento) && (siSociable || noSociable) &&
+              (siEsteril || noEsteril) && (color) && !(patron)) {
+              @for (p of patterns; track p) {
+              <div class="col-6 shadow-lg my-2 ">
+                <button class="btn btn-outline-light" (click)="thisPatron(p)">{{ p
+                  }}</button><!-- from {6 a 9} to {10 a 13] -->
+              </div>
+              }
+              }
+            </div>
+          </div>
+        </div>
+        }@else if (noPetFound && displayMatchs && !questReady) {
+        <div class="card text-center mgn">
+          <div class="card-header mb-5 shadow-lg">
+            <img class="img-fluid" src="../../assets/images/login-signup/adopta.png" alt="">
+          </div>
+          <div class="card-body mgn-bot-notFound">
+            <h2 class="card-title my-3">Oraculo de Mascotas</h2>
+            <!-- Texto de Interaccion -->
+            <div class="card-test mt-5">
+              <p>Parece que no hay mascotas disponibles que se ajusten a las preferencias que has seleccionado. Te
+                invitamos a intentarlo nuevamente o revisar más tarde, ya que constantemente se
+                actualiza nuestra base de datos con nuevas mascotas en búsqueda de un hogar amoroso.
+                Apreciamos tu paciencia y comprensión. Si necesitas ayuda o tienes alguna pregunta, no dudes en ponerte
+                en contacto con nosotros:</p>
+            </div>
+            <div class="mailCont my-5">
+              <h4 id="emailText" class="email-container">
+                {{mailOFF}}
+                <i class="far fa-clone copy-icon" (click)="copyText()"></i>
+              </h4>
+            </div>
+          </div>
+          <div class="botSticky">
+            <button class="btn btn-outline-light" (click)="refreshPage()">¡Deseo volver a intentarlo!</button>
+          </div>
+        </div>
+        }@else if(displayMatchs && !questReady && !noPetFound) {
+  
+        <div class="row">
+          <div class="col-md-3 col-sm-6 mb-4" *ngFor="let pet of mascotasFiltradas">
+            <div class="card-animal card-animal-color">
+              <img class="card-animal-img-top" [src]="pet.imagen" alt="Imagen de la mascota">
+              <div class="card-animal-body">
+                <h2 class="card-title">{{ pet.nombre }}</h2>
+                <p class="card-text">
+                  <strong>Descripción:</strong> {{ pet.descripcion }}
+                </p>
+                <button class="btn btn-primary" (click)="openPetDetailModal(pet)">Ver Detalles</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal" [ngClass]="{'show': isModalOpen}" [ngStyle]="{'display': isModalOpen ? 'block' : 'none'}">
+          <div class="modal-dialog">
+            <div class="modal-content modal-Kl">
+              <span class="close" (click)="closeModal()">&times;</span>
+              <div class="modal-header">
+                <h2 class="modal-title">{{ selectedPet?.nombre }}</h2>
+              </div>
+              <div class="modal-body">
+                <p><strong>Microchip:</strong> {{ selectedPet?.microchip }}</p>
+                <p><strong>Fecha de Nacimiento:</strong> {{ selectedPet?.fecha_nacimiento }}</p>
+                <p><strong>Sexo:</strong> {{ selectedPet?.sexo }}</p>
+                <p><strong>Color:</strong> {{ selectedPet?.color }}</p>
+                <p><strong>Patrón:</strong> {{ selectedPet?.patron }}</p>
+                <p><strong>Esterilizado:</strong> {{ selectedPet?.esterilizado ? 'Sí' : 'No' }}</p>
+                <p><strong>Sociable:</strong> {{ selectedPet?.sociable ? 'Sí' : 'No' }}</p>
+                <p><strong>Tratamiento:</strong> {{ selectedPet?.tratamiento ? 'Sí' : 'No' }}</p>
+                <p><strong>Descripción del Tratamiento:</strong> {{ selectedPet?.tratamientoDescripcion }}</p>
+                <p><strong>Vacunas:</strong> {{ selectedPet?.vacunas ? 'Sí' : 'No' }}</p>
+                <p><strong>Descripción:</strong> {{ selectedPet?.descripcion }}</p>
+                <p><strong>Raza:</strong> {{ selectedPet?.raza.nombreRaza }}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                  (click)="setCoincidence(selectedPet?.id)">Coincidir</button>
+                <button class="btn btn-secondary" (click)="volverAtras()">Intentar nuevamente</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        }@else if (questReady && (displayMatchs) && !(noPetFound)) {
+        <div class="card text-center mgn">
+          <div class="card-header mb-5 shadow-lg">
+            <img class="img-fluid" src="../../assets/images/login-signup/adopta.png" alt="">
+          </div>
+          <div class="card-body mgn-bot">
+            <h2 class="card-title my-3">Oraculo de Mascotas</h2>
+            <!-- Texto de Interaccion -->
+            <div class="card-test mt-5">
+              <p>¡Felicidades! Hemos recibido tu postulación exitosamente.
+                Nos complace informarte que hemos enviado un correo electrónico a tu dirección registrada, si no lo
+                encuentras en la bandeja de entrada te pedimos revisar spam. En este
+                mensaje encontrarás todos los detalles necesarios para continuar con el proceso de adopción. Te
+                agradecemos por tu interés y entusiasmo en brindar un hogar amoroso a una mascota necesitada.</p>
+            </div>
+            <div class="top-row">
+              <button class="btn btn-outline-light" (click)="refreshPage()">¡Entiendo! Gracias</button>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
