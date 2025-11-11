@@ -1,4 +1,4 @@
-# 🐾 Adóptame
+# 🐶 Adóptame
 Plataforma web para la adopción de mascotas desarrollada como proyecto educativo.  
 Implementada con **Django REST Framework** y una interfaz dinámica creada con **Angular**.
 
