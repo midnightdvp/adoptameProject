@@ -1,0 +1,10 @@
+Colores
+Azul Cielo: #87CEEB
+Azul Bebe: #89CFF0
+Azul Polvo: #B0E0E6
+Azul Aciano: #ABCDEF
+Azul Palido: #87CEEB
+
+Tipo grafia
+Serif: Para Titulos y encabezados. Vollkorn, Athene o Lovelyn.
+Sans Serif: Para cuerpos de txt. Roboto, Open Sans o Lato.

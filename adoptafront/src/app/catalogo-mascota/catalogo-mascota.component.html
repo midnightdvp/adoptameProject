@@ -1,0 +1,97 @@
+<!-- Filtros -->
+<header>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <h1 class="shadow">Mascotas</h1>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ms-auto d-block d-lg-flex text-center">
+          <div class="form-group">
+            <label for="filtroEspecie">Filtrar por especie:</label>
+            <select id="filtroEspecie" class="form-control" (change)="updateEspecieFilter($event)">
+              <option value="null">Todas</option>
+              <option value="1">Perros</option>
+              <option value="2">Gatos</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<!-- Catalogo -->
+<div class="container">
+  <div class="col-1">
+    <app-navsty></app-navsty>
+  </div>
+  <div class="row">
+    <div class="col-4 text-center mb-3 mt-3">
+      <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+    </div>
+    <div class="col-4 text-center mb-3 mt-3">
+      <p>Página {{ currentPage }} de {{ totalPages }}</p>
+    </div>
+    <div class="col-4 text-center mb-3 mt-3">
+      <button class="btn btn-primary" (click)="nextPage()" [disabled]="(currentPage * itemsPerPage) >= todasLasMascotas.length">Siguiente</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let mascota of paginatedMascotas">
+      @if (mascota.estado !== 'Pendiente' && mascota.estado !== 'Adoptado') {
+        <div class="card">
+          <img [src]="mascota.imagen" class="card-img-top" alt="">
+          <div class="card-body card-color">
+            <h2 class="card-title">{{mascota.nombre}}</h2>
+            <p class="card-text">
+              <strong>Sexo:</strong> {{mascota.sexo}}
+            </p>
+            <p class="card-text">
+              <strong>Raza:</strong> {{mascota.nombreRaza}}
+            </p>
+            <p class="card-text">
+              <strong>Descripción:</strong> {{mascota.descripcion}}
+            </p>
+            <button class="btn btn-primary" (click)="openModal(mascota)">Ver más</button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+  <div class="row mb-5">
+    <div class="col-4 text-center mb-5">
+      <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+    </div>
+    <div class="col-4 text-center mb-5">
+      <p>Página {{ currentPage }} de {{ totalPages }}</p>
+    </div>
+    <div class="col-4 text-center mb-5">
+      <button class="btn btn-primary" (click)="nextPage()" [disabled]="(currentPage * itemsPerPage) >= todasLasMascotas.length">Siguiente</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="openModalIn" class="modal custom-modal" [ngClass]="{'show': showMascota}"
+  [ngStyle]="{'display': showMascota ? 'block' : 'none'}">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <div class="modal-body">
+      <h2 class="modal-title">{{selectedMascota?.nombre}}</h2>
+      <p><strong class="modal-title">Microchip:</strong> {{selectedMascota?.microchip}}</p>
+      <p><strong>Fecha de Nacimiento:</strong> {{selectedMascota?.fecha_nacimiento}}</p>
+      <p><strong>Sexo:</strong> {{selectedMascota?.sexo}}</p>
+      <p><strong>Raza:</strong> {{selectedMascota?.nombreRaza}}</p>
+      <p><strong>Color:</strong> {{selectedMascota?.color}}</p>
+      <p><strong>Patrón:</strong> {{selectedMascota?.patron}}</p>
+      <p><strong>Esterilizado:</strong> {{selectedMascota?.esterilizado ? 'Si' : 'No'}}</p>
+      <p><strong>Sociable:</strong> {{selectedMascota?.sociable ? 'Si' : 'No'}}</p>
+      <p><strong>Tratamiento:</strong> {{selectedMascota?.tratamiento ? 'Si' : 'No'}}</p>
+      <p><strong>Descripción del Tratamiento:</strong> {{selectedMascota?.tratamientoDescripcion}}</p>
+      <p><strong>Vacunas:</strong> {{selectedMascota?.vacunas ? 'Si' : 'No'}}</p>
+      <p><strong>Descripción:</strong> {{selectedMascota?.descripcion}}</p>
+    </div>
+    <button class="btn btn-primary" (click)="setCoincidence(selectedMascota?.id)">Solicitar adopción</button>
+  </div>
+</div>
